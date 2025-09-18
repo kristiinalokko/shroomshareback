@@ -1,9 +1,10 @@
 package ee.valiit.shroomshareback.infrastructure;
 
-import ee.bcs.bank38back.infrastructure.error.ApiError;
-import ee.bcs.bank38back.infrastructure.exception.DataNotFoundException;
-import ee.bcs.bank38back.infrastructure.exception.ForbiddenException;
-import ee.bcs.bank38back.infrastructure.exception.PrimaryKeyNotFoundException;
+
+import ee.valiit.shroomshareback.infrastructure.error.ApiError;
+import ee.valiit.shroomshareback.infrastructure.exception.DataNotFoundException;
+import ee.valiit.shroomshareback.infrastructure.exception.ForbiddenException;
+import ee.valiit.shroomshareback.infrastructure.exception.PrimaryKeyNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;

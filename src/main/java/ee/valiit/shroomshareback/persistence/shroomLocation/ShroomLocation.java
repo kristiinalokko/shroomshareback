@@ -14,7 +14,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Table(name = "shroom_location", schema = "shroomshare")
 public class ShroomLocation {
     @Id
-    @ColumnDefault("nextval('shroomshare.shroom_location_id_seq')")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 

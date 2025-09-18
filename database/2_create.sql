@@ -4,7 +4,7 @@
 -- tables
 -- Table: comment
 CREATE TABLE comment (
-    id int  NOT NULL,
+    id serial  NOT NULL,
     location_id int  NOT NULL,
     user_id int  NOT NULL,
     body varchar(255)  NULL,
@@ -44,7 +44,7 @@ CREATE TABLE inbox (
 
 -- Table: location
 CREATE TABLE location (
-    id int  NOT NULL,
+    id serial  NOT NULL,
     user_id int  NOT NULL,
     name varchar(255)  NOT NULL,
     lat decimal(10,7)  NOT NULL,
@@ -85,7 +85,7 @@ CREATE TABLE role (
 
 -- Table: shroom
 CREATE TABLE shroom (
-    id int  NOT NULL,
+    id serial  NOT NULL,
     user_id int  NOT NULL,
     name varchar(255)  NOT NULL,
     description varchar(255)  NULL,
@@ -119,7 +119,7 @@ CREATE TABLE time_range (
 
 -- Table: user
 CREATE TABLE "user" (
-    id int  NOT NULL,
+    id serial  NOT NULL,
     role_id int  NOT NULL,
     username varchar(50)  NOT NULL,
     password varchar(50)  NOT NULL,

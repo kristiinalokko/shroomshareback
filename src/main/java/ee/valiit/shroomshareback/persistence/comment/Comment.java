@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Table(name = "comment", schema = "shroomshare")
 public class Comment {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull

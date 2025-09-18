@@ -13,7 +13,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Table(name = "comment_image", schema = "shroomshare")
 public class CommentImage {
     @Id
-    @ColumnDefault("nextval('shroomshare.comment_image_id_seq')")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 

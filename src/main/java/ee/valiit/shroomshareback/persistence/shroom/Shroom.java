@@ -13,6 +13,7 @@ import lombok.Setter;
 @Table(name = "shroom", schema = "shroomshare")
 public class Shroom {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
