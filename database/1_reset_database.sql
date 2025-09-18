@@ -1,5 +1,5 @@
 -- Kustutab public schema (mis põhimõtteliselt kustutab kõik tabelid)
-DROP SCHEMA IF EXISTS bank CASCADE;
+DROP SCHEMA IF EXISTS shroomshare CASCADE;
 -- Loob uue public schema vajalikud õigused
 CREATE SCHEMA shroomshare
 -- taastab vajalikud andmebaasi õigused
