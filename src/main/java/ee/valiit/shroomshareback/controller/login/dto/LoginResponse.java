@@ -1,4 +1,4 @@
-package ee.valiit.shroomshareback.controller.dto;
+package ee.valiit.shroomshareback.controller.login.dto;
 
 import lombok.Value;
 

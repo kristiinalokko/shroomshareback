@@ -2,7 +2,7 @@ package ee.valiit.shroomshareback.service;
 
 import ee.valiit.shroomshareback.Error;
 import ee.valiit.shroomshareback.Status;
-import ee.valiit.shroomshareback.controller.dto.LoginResponse;
+import ee.valiit.shroomshareback.controller.login.dto.LoginResponse;
 import ee.valiit.shroomshareback.infrastructure.exception.DataNotFoundException;
 import ee.valiit.shroomshareback.persistence.user.User;
 import ee.valiit.shroomshareback.persistence.user.UserMapper;
@@ -20,7 +20,7 @@ public class LoginService {
 
     public LoginResponse login(String username, String password) {
         User validUser = userRepository.getValidUser(username, password, Status.ACTIVE.getCode())
-                .orElseThrow(() -> new DataNotFoundException(Error.INCORECT_CREDENTIALS.getMessage(),Error.INCORECT_CREDENTIALS.getErrorCode()));
+                .orElseThrow(() -> new DataNotFoundException(Error.INCORRECT_CREDENTIALS.getMessage(),Error.INCORRECT_CREDENTIALS.getErrorCode()));
 
         return userMapper.toLoginResponse(validUser);
 
