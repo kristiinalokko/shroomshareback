@@ -1,6 +1,6 @@
-package ee.valiit.shroomshareback.controller;
+package ee.valiit.shroomshareback.controller.login;
 
-import ee.valiit.shroomshareback.controller.dto.LoginResponse;
+import ee.valiit.shroomshareback.controller.login.dto.LoginResponse;
 import ee.valiit.shroomshareback.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
