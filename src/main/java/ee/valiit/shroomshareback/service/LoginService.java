@@ -18,8 +18,8 @@ public class LoginService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public LoginResponse login(String userName, String password) {
-        User validUser = userRepository.getValidUser(userName, password, Status.ACTIVE.getCode())
+    public LoginResponse login(String username, String password) {
+        User validUser = userRepository.getValidUser(username, password, Status.ACTIVE.getCode())
                 .orElseThrow(() -> new DataNotFoundException(Error.INCORECT_CREDENTIALS.getMessage(),Error.INCORECT_CREDENTIALS.getErrorCode()));
 
         return userMapper.toLoginResponse(validUser);
