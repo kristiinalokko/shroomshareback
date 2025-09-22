@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum Status {
 
     ACTIVE("A"),
-    PENDIG("P"),
+    PENDING("P"),
     DEACTIVATED("D");
 
     private final String code;

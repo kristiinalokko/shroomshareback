@@ -13,4 +13,10 @@ public interface LocationMapper {
     @Mapping(source = "description", target = "description")
     LocationDto toLocationExtendedInfo(Location location);
 
+    @Mapping(source = "locationName", target = "name")
+    @Mapping(source = "latitude", target = "latitude")
+    @Mapping(source = "longitude", target = "longitude")
+    @Mapping(source = "description", target = "description")
+    @Mapping(expression = "java(java.time.LocalDate.now())", target = "created")
+    Location dtoToLocation(LocationDto locationDto);
 }
