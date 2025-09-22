@@ -1,5 +1,6 @@
 package ee.valiit.shroomshareback.controller.location;
 
+import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
 import ee.valiit.shroomshareback.service.LocationService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -11,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class LocationController {
 
-    private LocationService locationService;
+    private final LocationService locationService;
 
-    @GetMapping("/location")
-    @Operation(summary = "Get user location")
-    public void getLocation(@RequestParam Integer locationId) {
-        locationService.getLocation(locationId);
+    @GetMapping("/location-info")
+    @Operation(summary = "Get user location info")
+    public LocationInfo getLocationInfo(@RequestParam Integer locationId) {
+       return locationService.getLocationInfo(locationId);
     }
 
 }
