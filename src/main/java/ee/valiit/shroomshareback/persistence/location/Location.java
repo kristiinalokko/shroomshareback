@@ -32,11 +32,11 @@ public class Location {
 
     @NotNull
     @Column(name = "lat", nullable = false, precision = 10, scale = 7)
-    private BigDecimal lat;
+    private BigDecimal latitude;
 
     @NotNull
     @Column(name = "long", nullable = false, precision = 10, scale = 7)
-    private BigDecimal longField;
+    private BigDecimal longitude;
 
     @Size(max = 255)
     @Column(name = "description")
