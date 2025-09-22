@@ -1,7 +1,11 @@
 package ee.valiit.shroomshareback.persistence.location;
 
 import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
-import org.mapstruct.*;
+import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.ReportingPolicy;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface LocationMapper {
@@ -11,7 +15,11 @@ public interface LocationMapper {
     @Mapping(source = "latitude", target = "latitude")
     @Mapping(source = "longitude", target = "longitude")
     @Mapping(source = "description", target = "description")
-    LocationDto toLocationExtendedInfo(Location location);
+//    @Mapping(source = "", target = "locationImage")
+    @Mapping(source = "user.username", target = "username")
+    @Mapping(source = "created", target = "createdAt")
+    @Mapping(source = "avgRating", target = "avgRating")
+    LocationInfo toLocationInfo(Location location);
 
     @Mapping(source = "locationName", target = "name")
     @Mapping(source = "latitude", target = "latitude")

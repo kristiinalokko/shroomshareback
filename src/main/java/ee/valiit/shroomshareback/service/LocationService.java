@@ -2,6 +2,7 @@ package ee.valiit.shroomshareback.service;
 
 import ee.valiit.shroomshareback.Status;
 import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
+import ee.valiit.shroomshareback.Error;
 import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
 import ee.valiit.shroomshareback.infrastructure.exception.DataNotFoundException;
 import ee.valiit.shroomshareback.persistence.location.Location;
@@ -56,16 +57,22 @@ public class LocationService {
     public LocationInfo getLocationInfo(Integer locationId) {
         Optional<Location> optionalLocation = locationRepository.findById(locationId);
 
-//        if (optionalLocation.isPresent()) {
-//            LocationDto locationDto = locationMapper.toLocationExtendedInfo(optionalLocation.get());
-//            Optional<LocationImage> optionalImage = locationImageRepository.findImageByLocationId(locationId);
-//            if (optionalImage.isPresent()) {
-//                locationDto.setLocationImage(BytesConverter.bytesToString(optionalImage.get().getImageData()));
-//            }
-//            return locationDto;
-//        } else {
-//            throw new DataNotFoundException(Error.LOCATION_NOT_FOUND.getMessage(), Error.LOCATION_NOT_FOUND.getErrorCode());
-//        }
-        return null;
+        if (optionalLocation.isPresent()) {
+            LocationInfo locationInfo = locationMapper.toLocationInfo(optionalLocation.get());
+            addImageIfExists(locationId, locationInfo);
+            return locationInfo;
+        } else {
+            throw new DataNotFoundException(Error.LOCATION_NOT_FOUND.getMessage(), Error.LOCATION_NOT_FOUND.getErrorCode());
+        }
+    }
+
+
+    private void addImageIfExists(Integer locationId, LocationInfo locationInfo) {
+        Optional<LocationImage> optionalImage = locationImageRepository.findImageByLocationId(locationId);
+        if (optionalImage.isPresent()) {
+            locationInfo.setLocationImage(BytesConverter.bytesToString(optionalImage.get().getImageData()));
+        } else {
+            locationInfo.setLocationImage("");
+        }
     }
 }
