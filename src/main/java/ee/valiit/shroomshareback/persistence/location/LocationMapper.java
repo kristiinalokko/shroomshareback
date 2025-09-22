@@ -18,7 +18,6 @@ public interface LocationMapper {
     @Mapping(source = "user.username", target = "username")
     @Mapping(source = "created", target = "createdAt")
     @Mapping(source = "avgRating", target = "avgRating")
-//    @Mapping(source = "", target = "isFavourite")
     LocationInfo toLocationInfo(Location location);
 
 }
