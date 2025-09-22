@@ -31,12 +31,12 @@ public class Location {
     private String name;
 
     @NotNull
-    @Column(name = "lat", nullable = false, precision = 10, scale = 7)
-    private BigDecimal lat;
+    @Column(name = "latitude", nullable = false, precision = 10, scale = 7)
+    private BigDecimal latitude;
 
     @NotNull
-    @Column(name = "long", nullable = false, precision = 10, scale = 7)
-    private BigDecimal longField;
+    @Column(name = "longitude", nullable = false, precision = 10, scale = 7)
+    private BigDecimal longitde;
 
     @Size(max = 255)
     @Column(name = "description")
