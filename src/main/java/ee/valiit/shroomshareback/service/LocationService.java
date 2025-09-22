@@ -30,23 +30,26 @@ public class LocationService {
         Optional<Location> optionalLocation = locationRepository.findById(locationId);
 
         if (optionalLocation.isPresent()) {
-
             LocationInfo locationInfo = locationMapper.toLocationInfo(optionalLocation.get());
-
-            Optional<LocationImage> optionalImage = locationImageRepository.findImageByLocationId(locationId);
-            if (optionalImage.isPresent()) {
-                locationInfo.setLocationImage(BytesConverter.bytesToString(optionalImage.get().getImageData()));
-            }else {
-                locationInfo.setLocationImage("");
-            }
-
-            Optional<Favorite> optionalFavorite = favoriteRepository.findByUserId(locationId, userId);
-            locationInfo.setIsFavourite(optionalFavorite.isPresent());
-
+            addImageIfExists(locationId, locationInfo);
+            setIsFavorite(locationId, userId, locationInfo);
             return locationInfo;
-
         } else {
             throw new DataNotFoundException(Error.LOCATION_NOT_FOUND.getMessage(), Error.LOCATION_NOT_FOUND.getErrorCode());
+        }
+    }
+
+    private void setIsFavorite(Integer locationId, Integer userId, LocationInfo locationInfo) {
+        Optional<Favorite> optionalFavorite = favoriteRepository.findByUserId(locationId, userId);
+        locationInfo.setIsFavourite(optionalFavorite.isPresent());
+    }
+
+    private void addImageIfExists(Integer locationId, LocationInfo locationInfo) {
+        Optional<LocationImage> optionalImage = locationImageRepository.findImageByLocationId(locationId);
+        if (optionalImage.isPresent()) {
+            locationInfo.setLocationImage(BytesConverter.bytesToString(optionalImage.get().getImageData()));
+        }else {
+            locationInfo.setLocationImage("");
         }
     }
 }
