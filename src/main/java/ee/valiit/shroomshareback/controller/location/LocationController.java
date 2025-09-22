@@ -16,8 +16,8 @@ public class LocationController {
 
     @GetMapping("/location-info")
     @Operation(summary = "Get user location info")
-    public LocationInfo getLocationInfo(@RequestParam Integer locationId) {
-       return locationService.getLocationInfo(locationId);
+    public LocationInfo getLocationInfo(@RequestParam Integer locationId, @RequestParam Integer userId) {
+       return locationService.getLocationInfo(locationId, userId);
     }
 
 }
