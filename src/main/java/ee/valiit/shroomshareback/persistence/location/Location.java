@@ -36,7 +36,7 @@ public class Location {
 
     @NotNull
     @Column(name = "longitude", nullable = false, precision = 10, scale = 7)
-    private BigDecimal longitde;
+    private BigDecimal longitude;
 
     @Size(max = 255)
     @Column(name = "description")
