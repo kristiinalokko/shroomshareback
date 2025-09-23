@@ -27,8 +27,8 @@ public class LocationController {
 
     @PutMapping("/location")
     @Operation(summary = "Edit location info")
-    public void editLocation(@RequestBody LocationDto locationDto){
-        locationService.editLocation(locationDto);
+    public void editLocation(@RequestBody LocationDto locationDto, @RequestParam Integer locationId){
+        locationService.editLocation(locationDto, locationId);
     }
 
 }

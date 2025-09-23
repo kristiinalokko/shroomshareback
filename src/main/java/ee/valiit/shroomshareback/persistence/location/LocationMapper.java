@@ -27,4 +27,11 @@ public interface LocationMapper {
     @Mapping(source = "description", target = "description")
     @Mapping(expression = "java(java.time.LocalDate.now())", target = "lastActive")
     Location dtoToLocation(LocationDto locationDto);
+
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "latitude", target = "latitude")
+    @Mapping(source = "longitude", target = "longitude")
+    @Mapping(source = "description", target = "description")
+    @Mapping(expression = "java(java.time.LocalDate.now())", target = "lastActive")
+    void updateLocationFromDto(Location location, LocationDto locationDto);
 }

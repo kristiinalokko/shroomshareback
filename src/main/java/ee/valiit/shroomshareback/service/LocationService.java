@@ -100,8 +100,10 @@ public class LocationService {
         }
     }
 
-    public void editLocation(LocationDto locationDto) {
-        Location location = locationMapper.dtoToLocation(locationDto);
+    public void editLocation(LocationDto locationDto, Integer locationId) {
+        Location location = locationRepository.findById(locationId).
+                orElseThrow();
+        locationMapper.updateLocationFromDto(location, locationDto);
         location.setStatus(Status.PENDING.getCode());
         locationRepository.save(location);
         saveLocationImageIfPresent(locationDto, location);
