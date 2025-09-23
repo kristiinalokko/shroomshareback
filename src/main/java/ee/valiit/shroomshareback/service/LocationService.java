@@ -32,26 +32,51 @@ public class LocationService {
     private final UserRepository userRepository;
 
     public void addLocation(LocationDto locationDto) {
-        Optional<User> optionalUser = userRepository.findById(locationDto.getUserId());
+        Location location = setLocationData(locationDto);
+        locationRepository.save(location);
+        saveLocationImageIfPresent(locationDto, location);
+    }
+
+    private Location setLocationData(LocationDto locationDto) {
         Location location = locationMapper.dtoToLocation(locationDto);
-
-        User user = optionalUser.get();
+        User user = findUser(locationDto);
         location.setUser(user);
+        setLocationDefaultValues(location);
+        return location;
+    }
 
+    private static void setLocationDefaultValues(Location location) {
         location.setStatus(Status.PENDING.getCode());
-
         location.setLastActive(LocalDate.now());
         location.setAvgRating(BigDecimal.valueOf(0.0));
+    }
 
-        locationRepository.save(location);
-
-        if(!locationDto.getLocationImage().isEmpty()){
-            byte[] locationImage = BytesConverter.stringToBytes(locationDto.getLocationImage());
-            LocationImage locationImage1 = new LocationImage();
-            locationImage1.setLocation(location);
-            locationImage1.setImageData(locationImage);
-            locationImageRepository.save(locationImage1);
+    private void saveLocationImageIfPresent(LocationDto locationDto, Location location) {
+        if(locationImageIsPresent(locationDto)){
+            createAndSaveLocationImage(locationDto, location);
         }
+    }
+
+    private void createAndSaveLocationImage(LocationDto locationDto, Location location) {
+        byte[] imageData = BytesConverter.stringToBytes(locationDto.getLocationImage());
+        LocationImage locationImage = createLocationImage(location, imageData);
+        locationImageRepository.save(locationImage);
+    }
+
+    private static LocationImage createLocationImage(Location location, byte[] imageData) {
+        LocationImage locationImage = new LocationImage();
+        locationImage.setLocation(location);
+        locationImage.setImageData(imageData);
+        return locationImage;
+    }
+
+    private static boolean locationImageIsPresent(LocationDto locationDto) {
+        return !locationDto.getLocationImage().isEmpty();
+    }
+
+    private User findUser(LocationDto locationDto) {
+        Optional<User> optionalUser = userRepository.findById(locationDto.getUserId());
+        return optionalUser.get();
     }
 
     public LocationInfo getLocationInfo(Integer locationId) {
