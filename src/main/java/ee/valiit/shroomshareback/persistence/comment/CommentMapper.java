@@ -14,6 +14,4 @@ public interface CommentMapper {
     @Mapping(source = "created", target = "created")
     CommentData toCommentData(Comment comment);
 
-    List<CommentData> toCommentDatas(List<Comment> comments);
-
 }

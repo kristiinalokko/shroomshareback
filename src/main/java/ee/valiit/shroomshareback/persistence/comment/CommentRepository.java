@@ -5,9 +5,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
     @Query("select c from Comment c where c.location.id = :id")
-    List<Comment> findByLocationId(@Param("id") Integer id);
+    Optional<List<Comment>> findByLocationId(@Param("id") Integer id);
 }
