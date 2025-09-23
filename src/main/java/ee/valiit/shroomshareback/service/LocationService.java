@@ -47,7 +47,7 @@ public class LocationService {
 
     private static void setLocationDefaultValues(Location location) {
         location.setStatus(Status.PENDING.getCode());
-        location.setLastActive(LocalDate.now());
+        location.setCreated(LocalDate.now());
         location.setAvgRating(BigDecimal.valueOf(0.0));
     }
 
@@ -91,7 +91,6 @@ public class LocationService {
         }
     }
 
-
     private void addImageIfExists(Integer locationId, LocationInfo locationInfo) {
         Optional<LocationImage> optionalImage = locationImageRepository.findImageByLocationId(locationId);
         if (optionalImage.isPresent()) {
@@ -99,5 +98,12 @@ public class LocationService {
         } else {
             locationInfo.setLocationImage("");
         }
+    }
+
+    public void editLocation(LocationDto locationDto) {
+        Location location = locationMapper.dtoToLocation(locationDto);
+        location.setStatus(Status.PENDING.getCode());
+        locationRepository.save(location);
+        saveLocationImageIfPresent(locationDto, location);
     }
 }
