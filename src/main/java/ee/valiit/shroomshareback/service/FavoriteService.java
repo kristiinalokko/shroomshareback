@@ -25,17 +25,22 @@ public class FavoriteService {
         return optionalFavorite.isPresent();
     }
 
-    public void updateFavorite(FavoriteDto favoriteDto) {
+
+    public void addFavorite(Integer locationId, Integer userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        Optional<Location> optionalLocation = locationRepository.findById(locationId);
+
+        Favorite favorite = new Favorite();
+        favorite.setUser(optionalUser.get());
+        favorite.setLocation(optionalLocation.get());
+        favoriteRepository.save(favorite);
+    }
+
+
+    public void deleteFavorite(FavoriteDto favoriteDto) {
         User user = userRepository.findById(favoriteDto.getUserId()).get();
         Location location = locationRepository.findById(favoriteDto.getLocationId()).get();
 
-        if (favoriteDto.getIsFavorite()) {
-            Favorite favorite = new Favorite();
-            favorite.setUser(user);
-            favorite.setLocation(location);
-            favoriteRepository.save(favorite);
-        } else {
-            favoriteRepository.deleteFavorite(user, location);
-        }
+        favoriteRepository.deleteByUserAndLocation(user, location);
     }
 }

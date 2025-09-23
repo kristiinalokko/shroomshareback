@@ -21,4 +21,8 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
   @Query("delete from Favorite f where f.user = :user and f.location = :location")
   void deleteFavorite(User user, Location location);
 
+  @Transactional
+  @Modifying
+  @Query("delete from Favorite f where f.user = :user and f.location = :location")
+  void deleteByUserAndLocation(User user, Location location);
 }

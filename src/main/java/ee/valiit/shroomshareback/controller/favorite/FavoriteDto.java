@@ -16,9 +16,6 @@ import java.io.Serializable;
 public class FavoriteDto implements Serializable {
 
     @NotNull
-    private Boolean isFavorite;
-
-    @NotNull
     private Integer userId;
 
     @NotNull

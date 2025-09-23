@@ -15,10 +15,16 @@ public class FavoriteController {
         return favoriteService.getFavorite(locationId, userId);
     }
 
-    @PutMapping("/updateFavorite")
-    public void updateFavorite(FavoriteDto favoriteDto) {
-        favoriteService.updateFavorite(favoriteDto);
+    @PostMapping("/favorite")
+    public void addFavorite(@RequestParam Integer locationId, @RequestParam Integer userId) {
+        favoriteService.addFavorite(locationId, userId);
     }
+
+    @DeleteMapping("/favorite")
+    public void deleteFavorite(FavoriteDto favoriteDto) {
+        favoriteService.deleteFavorite(favoriteDto);
+    }
+
 
 
 }
