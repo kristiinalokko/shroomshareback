@@ -1,13 +1,11 @@
 package ee.valiit.shroomshareback.persistence.location;
 
 import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
+import ee.valiit.shroomshareback.Status;
 import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, imports = {Status.class})
 public interface LocationMapper {
 
     @Mapping(source = "user.id", target = "userId")
@@ -28,10 +26,10 @@ public interface LocationMapper {
     @Mapping(expression = "java(java.time.LocalDate.now())", target = "lastActive")
     Location dtoToLocation(LocationDto locationDto);
 
-    @Mapping(source = "name", target = "name")
+    @Mapping(source = "locationName", target = "name")
     @Mapping(source = "latitude", target = "latitude")
     @Mapping(source = "longitude", target = "longitude")
     @Mapping(source = "description", target = "description")
     @Mapping(expression = "java(java.time.LocalDate.now())", target = "lastActive")
-    void updateLocationFromDto(Location location, LocationDto locationDto);
+    void updateLocationFromDto(@MappingTarget Location location, LocationDto locationDto);
 }
