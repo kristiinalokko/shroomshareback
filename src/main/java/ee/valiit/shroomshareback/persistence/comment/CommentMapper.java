@@ -1,12 +1,15 @@
 package ee.valiit.shroomshareback.persistence.comment;
 
-import ee.valiit.shroomshareback.controller.comment.CommentData;
+import ee.valiit.shroomshareback.controller.comment.dto.CommentData;
+import ee.valiit.shroomshareback.controller.comment.dto.CommentDto;
 import org.mapstruct.*;
-
-import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CommentMapper {
+
+    @Mapping(source = "body", target = "body")
+    @Mapping(source = "rating", target = "rating")
+    Comment toComment(CommentDto commentDto);
 
     @Mapping(source = "user.username", target = "username")
     @Mapping(source = "body", target = "body")
