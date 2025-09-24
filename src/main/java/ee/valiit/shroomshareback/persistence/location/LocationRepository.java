@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface LocationRepository extends JpaRepository<Location, Integer> {
 
     @Query("select l from Location l where l.id = :locationId and l.status = :status")
-    Optional<Location> findByIdAndStatus(@Param("id") Integer locationId, @Param("status") String status);
+    Optional<Location> findByIdAndStatus(Integer locationId, String status);
 
 
 }
