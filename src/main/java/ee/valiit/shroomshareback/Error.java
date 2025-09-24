@@ -7,6 +7,7 @@ public enum Error {
 
     INCORRECT_CREDENTIALS("Vale kasutajanimi või parool", 111),
     INCORRECT_USERNAME("Kasutajanimi on juba kasutusel", 888),
+    SHROOM_NOT_FOUND("Sellist seent ei leitud", 777),
     LOCATION_NOT_FOUND("Sellist asukohta ei leitud", 999);
 
     private final String message;
