@@ -8,7 +8,8 @@ public enum Error {
     INCORRECT_CREDENTIALS("Vale kasutajanimi või parool", 111),
     INCORRECT_USERNAME("Kasutajanimi on juba kasutusel", 888),
     LOCATION_NOT_FOUND("Sellist asukohta ei leidnud", 999),
-    COMMENT_NOT_FOUND("Selle asukohta kohta ei leidnud kommentaare", 555);
+    COMMENT_NOT_FOUND("Selle asukohta kohta ei leidnud kommentaare", 555),
+    SHROOM_NOT_FOUND("Sellist seent ei leitud", 777);
 
     private final String message;
     private final Integer errorCode;

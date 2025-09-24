@@ -1,0 +1,13 @@
+{
+  "userId": 0,
+  "shroomName": "string",
+  "shroomDescription": "string",
+  "status": "A",
+  "shroomImage": "string",
+  "shroomLocations": [
+      {
+        "locationID": 0,
+        "locationName": "string"
+      }
+    ]
+}

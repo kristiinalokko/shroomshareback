@@ -12,4 +12,8 @@ insert into shroomshare."user"(id, role_id, username, password, status) VALUES (
 insert into shroomshare.location(id, user_id, name, latitude, longitude, description, created, last_active, status, avg_rating) VALUES (default, 1, 'Paide seenekoht', 58.885, 25.557, 'Parim seenekoht, väga palju seeni', '2025-09-12', '2025-09-22', 'A', 2);
 insert into shroomshare.location(id, user_id, name, latitude, longitude, description, created, last_active, status, avg_rating) VALUES (default, 2, 'Tallinna mets', 58.945, 24.794, 'Koordinaadid vist viskavad linna, mis toimub', '2025-09-13', '2025-09-21', 'A', 4);
 
+insert into shroomshare.shroom(id, user_id, name, description, status) VALUES (default,1,'kukeseen', 'nämm nämm', 'A');
+insert into shroomshare.shroom(id, user_id, name, description, status) VALUES (default,2,'puravik', 'hea seen', 'A');
 
+insert into shroomshare.shroom_location(id, location_id, shroom_id) VALUES (default, 1, 1);
+insert into shroomshare.shroom_location(id, location_id, shroom_id) VALUES (default, 2, 2);

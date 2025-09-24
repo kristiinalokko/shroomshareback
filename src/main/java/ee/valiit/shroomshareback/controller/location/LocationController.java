@@ -25,4 +25,10 @@ public class LocationController {
         locationService.addLocation(locationDto);
     }
 
+    @PutMapping("/location")
+    @Operation(summary = "Edit location info")
+    public void editLocation(@RequestBody LocationDto locationDto, @RequestParam Integer locationId){
+        locationService.editLocation(locationDto, locationId);
+    }
+
 }
