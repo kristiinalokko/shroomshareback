@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
     @Query("select c from Comment c where c.location.id = :id")
-    Optional<List<Comment>> findByLocationId(@Param("id") Integer id);
+    Optional<List<Comment>> findByLocationId(Integer id);
 }

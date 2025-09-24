@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface LocationImageRepository extends JpaRepository<LocationImage, Integer> {
 
     @Query("select l from LocationImage l where l.location.id = :id")
-    Optional<LocationImage> findImageByLocationId(@Param("id") Integer id);
+    Optional<LocationImage> findImageByLocationId(Integer id);
 
 }

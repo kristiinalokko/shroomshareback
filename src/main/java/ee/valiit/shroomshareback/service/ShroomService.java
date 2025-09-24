@@ -11,6 +11,7 @@ import ee.valiit.shroomshareback.persistence.shroom.ShroomRepository;
 import ee.valiit.shroomshareback.persistence.shroomImage.ShroomImage;
 import ee.valiit.shroomshareback.persistence.shroomImage.ShroomImageRepository;
 import ee.valiit.shroomshareback.persistence.shroomLocation.ShroomLocation;
+import ee.valiit.shroomshareback.persistence.shroomLocation.ShroomlocationRepository;
 import ee.valiit.shroomshareback.util.BytesConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,8 @@ public class ShroomService {
         if(optionalShroomImage.isPresent()){
             String shroomImage = BytesConverter.bytesToString(optionalShroomImage.get().getImageData());
             shroomInfo.setShroomImage(shroomImage);
+        } else {
+            shroomInfo.setShroomImage("");
         }
     }
     private void setShroomLocations(ShroomInfo shroomInfo, Integer shroomId) {

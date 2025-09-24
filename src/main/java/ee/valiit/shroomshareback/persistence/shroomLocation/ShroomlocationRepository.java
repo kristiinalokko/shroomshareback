@@ -1,6 +1,5 @@
-package ee.valiit.shroomshareback.service;
+package ee.valiit.shroomshareback.persistence.shroomLocation;
 
-import ee.valiit.shroomshareback.persistence.shroomLocation.ShroomLocation;
 import org.springframework.data.repository.Repository;
 
 import java.util.List;

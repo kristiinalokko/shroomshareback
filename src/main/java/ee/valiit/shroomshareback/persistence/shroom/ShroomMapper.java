@@ -7,8 +7,8 @@ import org.mapstruct.*;
 public interface ShroomMapper {
 
     @Mapping(source = "user.id", target = "userId")
-    @Mapping(source = "description", target = "shroomDescription")
-    @Mapping(source = "name", target = "shroomName")
+    @Mapping(source = "description", target = "description")
+    @Mapping(source = "name", target = "name")
     ShroomInfo toShroomInfo(Shroom shroom);
 
 }
