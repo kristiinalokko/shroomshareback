@@ -14,9 +14,9 @@ public class LocationController {
     private final LocationService locationService;
 
     @GetMapping("/location-info")
-    @Operation(summary = "Get user location info")
-    public LocationInfo getLocationInfo(@RequestParam Integer locationId) {
-       return locationService.getLocationInfo(locationId);
+    @Operation(summary = "Get user location info, but only if the location is ACTIVE")
+    public LocationInfo getLocationInfoIfActive(@RequestParam Integer locationId) {
+       return locationService.getLocationInfoIfActive(locationId);
     }
 
     @PostMapping("/location")

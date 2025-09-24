@@ -18,8 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -79,8 +77,8 @@ public class LocationService {
         return optionalUser.get();
     }
 
-    public LocationInfo getLocationInfo(Integer locationId) {
-        Optional<Location> optionalLocation = locationRepository.findById(locationId);
+    public LocationInfo getLocationInfoIfActive(Integer locationId) {
+        Optional<Location> optionalLocation = locationRepository.findByIdAndStatus(locationId, Status.ACTIVE.getCode());
 
         if (optionalLocation.isPresent()) {
             LocationInfo locationInfo = locationMapper.toLocationInfo(optionalLocation.get());
