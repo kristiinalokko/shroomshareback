@@ -71,9 +71,11 @@ public class CommentService {
         comment.setStatus(Status.ACTIVE.getCode());
         commentRepository.save(comment);
 
-        CommentImage commentImage = new CommentImage();
-        commentImage.setComment(comment);
-        commentImage.setImageData(BytesConverter.stringToBytes(commentDto.getImageData()));
-        commentImageRepository.save(commentImage);
+        if (!commentDto.getImageData().isBlank()) {
+            CommentImage commentImage = new CommentImage();
+            commentImage.setComment(comment);
+            commentImage.setImageData(BytesConverter.stringToBytes(commentDto.getImageData()));
+            commentImageRepository.save(commentImage);
+        }
     }
 }
