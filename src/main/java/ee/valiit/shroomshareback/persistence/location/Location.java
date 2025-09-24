@@ -1,5 +1,6 @@
 package ee.valiit.shroomshareback.persistence.location;
 
+import ee.valiit.shroomshareback.persistence.shroom.Shroom;
 import ee.valiit.shroomshareback.persistence.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -9,6 +10,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -58,4 +60,12 @@ public class Location {
     @Column(name = "avg_rating", nullable = false, precision = 2, scale = 1)
     private BigDecimal avgRating;
 
+    @ManyToMany
+    @JoinTable(
+            name = "shroom_location",
+            schema = "shroomshare",
+            joinColumns = @JoinColumn(name = "location_id"),
+            inverseJoinColumns = @JoinColumn(name = "shroom_id")
+    )
+    private List<Shroom> shrooms;
 }

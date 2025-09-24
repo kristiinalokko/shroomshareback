@@ -4,6 +4,7 @@ import ee.valiit.shroomshareback.Status;
 import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
 import ee.valiit.shroomshareback.Error;
 import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
+import ee.valiit.shroomshareback.controller.location.dto.LocationShortInfo;
 import ee.valiit.shroomshareback.infrastructure.exception.DataNotFoundException;
 import ee.valiit.shroomshareback.persistence.location.Location;
 import ee.valiit.shroomshareback.persistence.location.LocationMapper;
@@ -18,7 +19,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,7 +93,6 @@ public class LocationService {
         }
     }
 
-
     private void addImageIfExists(Integer locationId, LocationInfo locationInfo) {
         Optional<LocationImage> optionalImage = locationImageRepository.findImageByLocationId(locationId);
         if (optionalImage.isPresent()) {
@@ -99,5 +100,39 @@ public class LocationService {
         } else {
             locationInfo.setLocationImage("");
         }
+    }
+
+    public List<LocationInfo> filterLocations(String shroomName, BigDecimal rating, String lastActiveAfter, BigDecimal lat, BigDecimal lon, BigDecimal radius) {
+        LocalDate lastActiveDate = null;
+        if (lastActiveAfter != null && !lastActiveAfter.isEmpty()) {
+            try {
+                // Assuming the input is in ISO_LOCAL_DATE format (e.g., '2025-09-24')
+                lastActiveDate = LocalDate.parse(lastActiveAfter);
+            } catch (java.time.format.DateTimeParseException e) {
+                // If parsing fails, try a different format
+                // Example: 'dd.MM.yyyy'
+                try {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                    lastActiveDate = LocalDate.parse(lastActiveAfter, formatter);
+                } catch (java.time.format.DateTimeParseException ex) {
+                    // You can add more formats here if needed or throw a custom exception
+                    throw new IllegalArgumentException("Invalid date format for lastActiveAfter: " + lastActiveAfter, ex);
+                }
+            }
+        }
+        List<Location> locations = locationRepository.findFilteredLocations(shroomName, rating, lastActiveDate, lat, lon, radius);
+        List<LocationInfo> locationInfos = new ArrayList<>();
+        for (Location location : locations) {
+            LocationInfo info = locationMapper.toLocationInfo(location);
+            addImageIfExists(location.getId(), info);
+            locationInfos.add(info);
+        }
+        return locationInfos;
+    }
+
+    public List<LocationShortInfo> findAllLocations() {
+        List<Location> locations = locationRepository.findAll();
+        List<LocationShortInfo> locationShortInfos = locationMapper.toLocationShortInfos(locations);
+        return locationShortInfos;
     }
 }
