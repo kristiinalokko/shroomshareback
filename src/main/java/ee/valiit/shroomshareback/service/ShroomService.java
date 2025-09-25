@@ -5,6 +5,7 @@ import ee.valiit.shroomshareback.Status;
 import ee.valiit.shroomshareback.controller.location.dto.SimplifiedLocation;
 import ee.valiit.shroomshareback.controller.shroom.dto.ShroomBasicInfo;
 import ee.valiit.shroomshareback.controller.shroom.dto.ShroomInfo;
+import ee.valiit.shroomshareback.controller.shroom.dto.ShroomProfile;
 import ee.valiit.shroomshareback.infrastructure.exception.DataNotFoundException;
 import ee.valiit.shroomshareback.persistence.shroom.Shroom;
 import ee.valiit.shroomshareback.persistence.shroom.ShroomMapper;
@@ -13,6 +14,8 @@ import ee.valiit.shroomshareback.persistence.shroomImage.ShroomImage;
 import ee.valiit.shroomshareback.persistence.shroomImage.ShroomImageRepository;
 import ee.valiit.shroomshareback.persistence.shroomLocation.ShroomLocation;
 import ee.valiit.shroomshareback.persistence.shroomLocation.ShroomlocationRepository;
+import ee.valiit.shroomshareback.persistence.user.User;
+import ee.valiit.shroomshareback.persistence.user.UserRepository;
 import ee.valiit.shroomshareback.util.BytesConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +32,7 @@ public class ShroomService {
     private final ShroomMapper shroomMapper;
     private final ShroomImageRepository shroomImageRepository;
     private final ShroomlocationRepository shroomLocationRepository;
+    private final UserRepository userRepository;
 
     public ShroomInfo getShroom(Integer shroomId) {
         Shroom shroom = findShroomById(shroomId);
@@ -77,10 +81,21 @@ public class ShroomService {
         List<ShroomBasicInfo> shroomBasicInfos = new ArrayList<>();
         for (Shroom shroom : shrooms) {
             ShroomBasicInfo shroomBasicInfo = new ShroomBasicInfo();
-            shroomBasicInfo.setId(shroom.getId());
-            shroomBasicInfo.setName(shroom.getName());
+            shroomBasicInfo.setShroomId(shroom.getId());
+            shroomBasicInfo.setShroomName(shroom.getName());
             shroomBasicInfos.add(shroomBasicInfo);
         }
         return shroomBasicInfos;
+    }
+
+    public void addShroom(ShroomProfile shroomProfile) {
+        Shroom shroom = shroomMapper.shroomProfileToShroom(shroomProfile);
+        User user = (User) userRepository.getUserById(shroomProfile.getUserId());
+        shroom.setUser(user);
+        shroom.setStatus(Status.PENDING.getCode());
+        shroomRepository.save(shroom);
+
+//        image if available
+
     }
 }

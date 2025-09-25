@@ -17,18 +17,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShroomInfo implements Serializable {
-
-    @NotNull
-    private Integer userId;
-    @NotNull
-    @Size(max = 255)
-    private String name;
-    @Size(max = 255)
-    private String description;
-
-    @NotNull
-    private String shroomImage;
+public class ShroomInfo extends ShroomProfile implements Serializable {
 
     private List<SimplifiedLocation> locations;
 }
