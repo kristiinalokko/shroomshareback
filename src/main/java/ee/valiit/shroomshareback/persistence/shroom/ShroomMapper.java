@@ -1,6 +1,6 @@
 package ee.valiit.shroomshareback.persistence.shroom;
 
-import ee.valiit.shroomshareback.controller.shroom.ShroomInfo;
+import ee.valiit.shroomshareback.controller.shroom.dto.ShroomInfo;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
