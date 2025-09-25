@@ -5,6 +5,10 @@ import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
 import ee.valiit.shroomshareback.controller.location.dto.LocationShortInfo;
 import ee.valiit.shroomshareback.service.LocationService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,5 +44,20 @@ public class LocationController {
     public List<LocationShortInfo> findAllLocations() {
         List<LocationShortInfo> allLocations = locationService.findAllLocations();
         return allLocations;
+    }
+    @GetMapping("/map-locations/by-shroom")
+    @Operation(
+            summary = "Tagastab konkreetse seene asukohad.",
+            description = "Tagastab kõik antud seene asukohad LocationShortInfo kujul"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Ei leitud ühtegi seene asukohta"
+            )
+    })
+    public List<LocationShortInfo> findAllShroomLocations(@RequestParam Integer shroomId) {
+        return locationService.findAllShroomLocations(shroomId);
     }
 }

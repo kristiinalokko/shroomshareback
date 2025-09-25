@@ -11,6 +11,8 @@ import ee.valiit.shroomshareback.persistence.location.LocationMapper;
 import ee.valiit.shroomshareback.persistence.location.LocationRepository;
 import ee.valiit.shroomshareback.persistence.locationImge.LocationImage;
 import ee.valiit.shroomshareback.persistence.locationImge.LocationImageRepository;
+import ee.valiit.shroomshareback.persistence.shroomLocation.ShroomLocation;
+import ee.valiit.shroomshareback.persistence.shroomLocation.ShroomlocationRepository;
 import ee.valiit.shroomshareback.persistence.user.User;
 import ee.valiit.shroomshareback.persistence.user.UserRepository;
 import ee.valiit.shroomshareback.util.BytesConverter;
@@ -23,6 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +35,7 @@ public class LocationService {
     private final LocationMapper locationMapper;
     private final LocationImageRepository locationImageRepository;
     private final UserRepository userRepository;
+    private final ShroomlocationRepository shroomlocationRepository;
 
     public void addLocation(LocationDto locationDto) {
         Location location = setLocationData(locationDto);
@@ -114,5 +118,18 @@ public class LocationService {
         List<Location> locations = locationRepository.findAll();
         List<LocationShortInfo> locationShortInfos = locationMapper.toLocationShortInfos(locations);
         return locationShortInfos;
+    }
+    public List<LocationShortInfo> findAllShroomLocations(Integer shroomId) {
+        List<ShroomLocation> shroomLocations = shroomlocationRepository.findShroomLocationByShroom_Id(shroomId);
+
+        if (shroomLocations.isEmpty()) {
+            throw new DataNotFoundException(Error.LOCATION_NOT_FOUND.getMessage(), Error.LOCATION_NOT_FOUND.getErrorCode());
+        }
+
+        List<Location> locations = shroomLocations.stream()
+                .map(ShroomLocation::getLocation)
+                .collect(Collectors.toList());
+
+        return locationMapper.toLocationShortInfos(locations);
     }
 }
