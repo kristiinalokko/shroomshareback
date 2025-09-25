@@ -33,4 +33,5 @@ public class ShroomController {
     public List<ShroomBasicInfo> getShrooms() {
        return shroomService.getShrooms();
     }
+
 }

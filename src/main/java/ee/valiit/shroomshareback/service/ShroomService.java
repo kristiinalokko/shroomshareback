@@ -78,14 +78,7 @@ public class ShroomService {
 
     public List<ShroomBasicInfo> getShrooms() {
         List<Shroom> shrooms = shroomRepository.findAll();
-        List<ShroomBasicInfo> shroomBasicInfos = new ArrayList<>();
-        for (Shroom shroom : shrooms) {
-            ShroomBasicInfo shroomBasicInfo = new ShroomBasicInfo();
-            shroomBasicInfo.setShroomId(shroom.getId());
-            shroomBasicInfo.setShroomName(shroom.getName());
-            shroomBasicInfos.add(shroomBasicInfo);
-        }
-        return shroomBasicInfos;
+        return createAndSaveShroomBasicInfos(shrooms);
     }
 
     public void addShroom(ShroomProfile shroomProfile) {
@@ -95,7 +88,31 @@ public class ShroomService {
         shroom.setStatus(Status.PENDING.getCode());
         shroomRepository.save(shroom);
 
-//        image if available
+        if (!shroomProfile.getShroomImage().isEmpty()){
+            byte[] imageData = BytesConverter.stringToBytes(shroomProfile.getShroomImage());
+            ShroomImage shroomImage = new ShroomImage();
+            shroomImage.setShroom(shroom);
+            shroomImage.setImageData(imageData);
+            shroomImageRepository.save(shroomImage);
+        }
+    }
 
+    public List<ShroomBasicInfo> getLocationShrooms(Integer locationId) {
+        List<Shroom> shrooms = shroomRepository.findShroomByLocationId(locationId);
+        if(shrooms.isEmpty()){
+            return null;
+        }
+        return createAndSaveShroomBasicInfos(shrooms);
+    }
+
+    private static List<ShroomBasicInfo> createAndSaveShroomBasicInfos(List<Shroom> shrooms) {
+        List<ShroomBasicInfo> shroomBasicInfos = new ArrayList<>();
+        for (Shroom shroom : shrooms) {
+            ShroomBasicInfo shroomBasicInfo = new ShroomBasicInfo();
+            shroomBasicInfo.setShroomId(shroom.getId());
+            shroomBasicInfo.setShroomName(shroom.getName());
+            shroomBasicInfos.add(shroomBasicInfo);
+        }
+        return shroomBasicInfos;
     }
 }

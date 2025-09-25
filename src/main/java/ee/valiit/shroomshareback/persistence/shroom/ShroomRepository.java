@@ -13,4 +13,6 @@ public interface ShroomRepository extends JpaRepository<Shroom, Integer> {
     @Query("select s from Shroom s where s.id = :id and s.status = :code")
     Optional<Shroom> findShroomById(Integer id, String code);
 
+    @Query("select s from Shroom s inner join s.locations locations where locations.id = :locationId")
+    List<Shroom> findShroomByLocationId(Integer locationId);
 }
