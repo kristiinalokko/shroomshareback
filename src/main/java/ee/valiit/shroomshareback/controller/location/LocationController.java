@@ -5,14 +5,12 @@ import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
 import ee.valiit.shroomshareback.controller.location.dto.LocationShortInfo;
 import ee.valiit.shroomshareback.controller.shroom.dto.ShroomBasicInfo;
 import ee.valiit.shroomshareback.service.LocationService;
+import ee.valiit.shroomshareback.service.ShroomLocationService;
 import ee.valiit.shroomshareback.service.ShroomService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -21,6 +19,7 @@ public class LocationController {
 
     private final LocationService locationService;
     private final ShroomService shroomService;
+    private final ShroomLocationService shroomLocationService;
 
     @GetMapping("/location-info")
     @Operation(summary = "Get user location info, but only if the location is ACTIVE")
@@ -53,13 +52,13 @@ public class LocationController {
 
     @PostMapping("/location/shroom")
     @Operation(summary = "Add shroom to location")
-    public void addLocationShroom(@RequestParam Integer locationId, @RequestParam Integer shroomId) {
-
+    public void addShroomLocation(@RequestParam Integer locationId, @RequestParam Integer shroomId) {
+        shroomLocationService.addShroomLocation(locationId, shroomId);
     }
 
     @DeleteMapping("/location/shroom")
     @Operation(summary = "Delete location shroom")
-    public void deleteLocationShroom(@RequestParam Integer locationId, @RequestParam Integer shroomId) {
+    public void deleteShroomLocation(@RequestParam Integer locationId, @RequestParam Integer shroomId) {
 
     }
 }
