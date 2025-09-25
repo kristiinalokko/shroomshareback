@@ -31,32 +31,19 @@ public class LocationController {
 
     @PostMapping("/location")
     @Operation(summary = "add new location")
-    public void addLocation(@RequestBody LocationDto locationDto){
+    public void addLocation(@RequestBody LocationDto locationDto) {
         locationService.addLocation(locationDto);
     }
 
     @PutMapping("/location")
     @Operation(summary = "Edit location info")
-    public void editLocation(@RequestBody LocationDto locationDto, @RequestParam Integer locationId){
+    public void editLocation(@RequestBody LocationDto locationDto, @RequestParam Integer locationId) {
         locationService.editLocation(locationDto, locationId);
     }
+
     @GetMapping("/map-locations/all")
     public List<LocationShortInfo> findAllLocations() {
         return locationService.findAllLocations();
     }
-    @GetMapping("/map-locations/by-shroom")
-    @Operation(
-            summary = "Tagastab konkreetse seene asukohad.",
-            description = "Tagastab kõik antud seene asukohad LocationShortInfo kujul"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Ei leitud ühtegi seene asukohta"
-            )
-    })
-    public List<LocationShortInfo> findAllShroomLocations(@RequestParam Integer shroomId) {
-        return locationService.findAllShroomLocations(shroomId);
-    }
+
 }

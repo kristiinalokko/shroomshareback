@@ -1,8 +1,8 @@
 package ee.valiit.shroomshareback.service;
 
+import ee.valiit.shroomshareback.Error;
 import ee.valiit.shroomshareback.Status;
 import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
-import ee.valiit.shroomshareback.Error;
 import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
 import ee.valiit.shroomshareback.controller.location.dto.LocationShortInfo;
 import ee.valiit.shroomshareback.infrastructure.exception.DataNotFoundException;
@@ -21,8 +21,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -120,7 +118,7 @@ public class LocationService {
         return locationShortInfos;
     }
     public List<LocationShortInfo> findAllShroomLocations(Integer shroomId) {
-        List<ShroomLocation> shroomLocations = shroomlocationRepository.findShroomLocationByShroom_Id(shroomId);
+        List<ShroomLocation> shroomLocations = shroomlocationRepository.findShroomLocationsBy(shroomId);
 
         if (shroomLocations.isEmpty()) {
             throw new DataNotFoundException(Error.LOCATION_NOT_FOUND.getMessage(), Error.LOCATION_NOT_FOUND.getErrorCode());
