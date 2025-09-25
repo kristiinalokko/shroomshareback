@@ -43,7 +43,7 @@ public class ShroomService {
     }
 
     private Shroom findShroomById(Integer shroomId) {
-        Optional<Shroom> optionalShroom = shroomRepository.findShroomById(shroomId, Status.ACTIVE.getCode());
+        Optional<Shroom> optionalShroom = shroomRepository.findShrooms(shroomId, Status.ACTIVE.getCode());
         if (optionalShroom.isEmpty()) {
             throw new DataNotFoundException(Error.SHROOM_NOT_FOUND.getMessage(), Error.SHROOM_NOT_FOUND.getErrorCode());
         }
@@ -51,7 +51,7 @@ public class ShroomService {
     }
 
     private void setShroomImage(ShroomInfo shroomInfo, Integer shroomId){
-        Optional<ShroomImage> optionalShroomImage = shroomImageRepository.findShroomImageById(shroomId);
+        Optional<ShroomImage> optionalShroomImage = shroomImageRepository.findShroomImage(shroomId);
         if(optionalShroomImage.isPresent()){
             String shroomImage = BytesConverter.bytesToString(optionalShroomImage.get().getImageData());
             shroomInfo.setShroomImage(shroomImage);
@@ -83,7 +83,7 @@ public class ShroomService {
 
     public void addShroom(ShroomProfile shroomProfile) {
         Shroom shroom = shroomMapper.shroomProfileToShroom(shroomProfile);
-        User user = (User) userRepository.getUserById(shroomProfile.getUserId());
+        User user = (User) userRepository.getUsers(shroomProfile.getUserId());
         shroom.setUser(user);
         shroom.setStatus(Status.PENDING.getCode());
         shroomRepository.save(shroom);
@@ -98,7 +98,7 @@ public class ShroomService {
     }
 
     public List<ShroomBasicInfo> getLocationShrooms(Integer locationId) {
-        List<Shroom> shrooms = shroomRepository.findShroomByLocationId(locationId);
+        List<Shroom> shrooms = shroomRepository.findShrooms(locationId);
         if(shrooms.isEmpty()){
             return null;
         }

@@ -112,7 +112,6 @@ public class LocationService {
     }
     public List<LocationShortInfo> findAllLocations() {
         List<Location> locations = locationRepository.findAll();
-        List<LocationShortInfo> locationShortInfos = locationMapper.toLocationShortInfos(locations);
-        return locationShortInfos;
+        return locationMapper.toLocationShortInfos(locations);
     }
 }

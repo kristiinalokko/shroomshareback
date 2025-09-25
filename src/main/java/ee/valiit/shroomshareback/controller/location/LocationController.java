@@ -30,22 +30,36 @@ public class LocationController {
 
     @PostMapping("/location")
     @Operation(summary = "add new location")
-    public void addLocation(@RequestBody LocationDto locationDto){
+    public void addLocation(@RequestBody LocationDto locationDto) {
         locationService.addLocation(locationDto);
     }
 
     @PutMapping("/location")
     @Operation(summary = "Edit location info")
-    public void editLocation(@RequestBody LocationDto locationDto, @RequestParam Integer locationId){
+    public void editLocation(@RequestBody LocationDto locationDto, @RequestParam Integer locationId) {
         locationService.editLocation(locationDto, locationId);
     }
+
     @GetMapping("/map-locations/all")
     public List<LocationShortInfo> findAllLocations() {
         return locationService.findAllLocations();
     }
+
     @GetMapping("/location/shrooms")
     @Operation(summary = "Get all location shrooms")
     public List<ShroomBasicInfo> getLocationShrooms(@RequestParam Integer locationId) {
         return shroomService.getLocationShrooms(locationId);
+    }
+
+    @PostMapping("/location/shroom")
+    @Operation(summary = "Add shroom to location")
+    public void addLocationShroom(@RequestParam Integer locationId, @RequestParam Integer shroomId) {
+
+    }
+
+    @DeleteMapping("/location/shroom")
+    @Operation(summary = "Delete location shroom")
+    public void deleteLocationShroom(@RequestParam Integer locationId, @RequestParam Integer shroomId) {
+
     }
 }
