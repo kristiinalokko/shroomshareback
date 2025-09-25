@@ -2,10 +2,16 @@ package ee.valiit.shroomshareback.controller.location;
 
 import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
 import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
+import ee.valiit.shroomshareback.controller.location.dto.LocationShortInfo;
 import ee.valiit.shroomshareback.service.LocationService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,7 +22,7 @@ public class LocationController {
     @GetMapping("/location-info")
     @Operation(summary = "Get user location info, but only if the location is ACTIVE")
     public LocationInfo getLocationInfoIfActive(@RequestParam Integer locationId) {
-       return locationService.getLocationInfoIfActive(locationId);
+        return locationService.getLocationInfoIfActive(locationId);
     }
 
     @PostMapping("/location")
@@ -30,5 +36,9 @@ public class LocationController {
     public void editLocation(@RequestBody LocationDto locationDto, @RequestParam Integer locationId){
         locationService.editLocation(locationDto, locationId);
     }
-
+    @GetMapping("/map-locations/all")
+    public List<LocationShortInfo> findAllLocations() {
+        List<LocationShortInfo> allLocations = locationService.findAllLocations();
+        return allLocations;
+    }
 }

@@ -4,6 +4,7 @@ import ee.valiit.shroomshareback.Status;
 import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
 import ee.valiit.shroomshareback.Error;
 import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
+import ee.valiit.shroomshareback.controller.location.dto.LocationShortInfo;
 import ee.valiit.shroomshareback.infrastructure.exception.DataNotFoundException;
 import ee.valiit.shroomshareback.persistence.location.Location;
 import ee.valiit.shroomshareback.persistence.location.LocationMapper;
@@ -18,6 +19,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -105,5 +109,10 @@ public class LocationService {
         location.setStatus(Status.PENDING.getCode());
         locationRepository.save(location);
         saveLocationImageIfPresent(locationDto, location);
+    }
+    public List<LocationShortInfo> findAllLocations() {
+        List<Location> locations = locationRepository.findAll();
+        List<LocationShortInfo> locationShortInfos = locationMapper.toLocationShortInfos(locations);
+        return locationShortInfos;
     }
 }

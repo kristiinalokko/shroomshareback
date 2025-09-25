@@ -1,11 +1,14 @@
 package ee.valiit.shroomshareback.persistence.shroom;
 
+import ee.valiit.shroomshareback.persistence.location.Location;
 import ee.valiit.shroomshareback.persistence.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -34,5 +37,8 @@ public class Shroom {
     @NotNull
     @Column(name = "status", nullable = false, length = Integer.MAX_VALUE)
     private String status;
+
+    @ManyToMany(mappedBy = "shrooms")
+    private List<Location> locations;
 
 }

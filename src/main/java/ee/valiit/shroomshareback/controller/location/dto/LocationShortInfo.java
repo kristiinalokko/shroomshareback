@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 /**
  * DTO for {@link Location}
@@ -18,24 +17,14 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LocationDto implements Serializable {
+public class LocationShortInfo implements Serializable {
 
-    @NotNull
-    private Integer userId;
-
-    @NotNull
-    @Size(max = 255)
+    private Integer locationId;
     private String locationName;
-
-    @NotNull
     private BigDecimal latitude;
-
-    @NotNull
     private BigDecimal longitude;
+    private String username;
+    private String createdAt;
+    private BigDecimal avgRating;
 
-    @Size(max = 255)
-    private String description;
-
-    @NotNull
-    private String locationImage;
 }

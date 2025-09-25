@@ -4,6 +4,14 @@ import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
 import ee.valiit.shroomshareback.Status;
 import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
 import org.mapstruct.*;
+import ee.valiit.shroomshareback.controller.location.dto.LocationShortInfo;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.ReportingPolicy;
+
+import java.util.List;
+
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, imports = {Status.class})
 public interface LocationMapper {
@@ -32,4 +40,18 @@ public interface LocationMapper {
     @Mapping(source = "description", target = "description")
     @Mapping(expression = "java(java.time.LocalDate.now())", target = "lastActive")
     void updateLocationFromDto(@MappingTarget Location location, LocationDto locationDto);
+
+
+    @Mapping(source = "id", target = "locationId")
+    @Mapping(source = "name", target = "locationName")
+    @Mapping(source = "latitude", target = "latitude")
+    @Mapping(source = "longitude", target = "longitude")
+    @Mapping(source = "user.username", target = "username")
+    @Mapping(source = "created", target = "createdAt")
+    @Mapping(source = "avgRating", target = "avgRating")
+    LocationShortInfo toLocationShortInfo(Location location);
+
+    List<LocationShortInfo> toLocationShortInfos(List<Location> locations);
+
+
 }
