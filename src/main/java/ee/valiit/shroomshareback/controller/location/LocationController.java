@@ -42,8 +42,7 @@ public class LocationController {
     }
     @GetMapping("/map-locations/all")
     public List<LocationShortInfo> findAllLocations() {
-        List<LocationShortInfo> allLocations = locationService.findAllLocations();
-        return allLocations;
+        return locationService.findAllLocations();
     }
     @GetMapping("/map-locations/by-shroom")
     @Operation(
