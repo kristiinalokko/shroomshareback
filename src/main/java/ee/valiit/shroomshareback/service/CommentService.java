@@ -73,6 +73,9 @@ public class CommentService {
         comment.setStatus(Status.ACTIVE.getCode());
         commentRepository.save(comment);
 
+        Integer locationAverageRating = commentRepository.findLocationAverageRating(commentDto.getLocationId());
+        locationRepository.updateAvgRatingAndLastActive(locationAverageRating, LocalDate.now(), commentDto.getLocationId());
+
         boolean imageExists = !commentDto.getImageData().isBlank();
         if (imageExists) {
             createAndSaveImage(commentDto, comment);
