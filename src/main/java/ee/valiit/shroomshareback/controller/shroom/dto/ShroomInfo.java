@@ -1,4 +1,4 @@
-package ee.valiit.shroomshareback.controller.shroom;
+package ee.valiit.shroomshareback.controller.shroom.dto;
 
 import ee.valiit.shroomshareback.controller.location.dto.SimplifiedLocation;
 import ee.valiit.shroomshareback.persistence.shroom.Shroom;
