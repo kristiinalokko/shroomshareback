@@ -45,11 +45,7 @@ public class CommentService {
             for (Comment comment : comments) {
                 CommentData commentData = (commentMapper.toCommentData(comment));
                 Optional<CommentImage> optionalCommentImage = commentImageRepository.findByCommentId(comment.getId());
-                if (optionalCommentImage.isPresent()) {
-                    commentData.setImageData(BytesConverter.bytesToString(optionalCommentImage.get().getImageData()));
-                } else {
-                    commentData.setImageData("");
-                }
+                handleImage(optionalCommentImage, commentData);
                 commentDatas.add(commentData);
             }
 
@@ -60,22 +56,43 @@ public class CommentService {
 
     }
 
+    private static void handleImage(Optional<CommentImage> optionalCommentImage, CommentData commentData) {
+        if (optionalCommentImage.isPresent()) {
+            commentData.setImageData(BytesConverter.bytesToString(optionalCommentImage.get().getImageData()));
+        } else {
+            commentData.setImageData("");
+        }
+    }
+
     @Transactional
     public void addComment(CommentDto commentDto) {
         Comment comment = commentMapper.toComment(commentDto);
-        Location location = locationRepository.findByIdAndStatus(commentDto.getLocationId(), Status.ACTIVE.getCode()).get();
-        comment.setLocation(location);
-        User user = userRepository.findById(commentDto.getUserId()).get();
-        comment.setUser(user);
+        addLocationToComment(commentDto, comment);
+        addUserToComment(commentDto, comment);
         comment.setCreated(LocalDate.now());
         comment.setStatus(Status.ACTIVE.getCode());
         commentRepository.save(comment);
 
-        if (!commentDto.getImageData().isBlank()) {
-            CommentImage commentImage = new CommentImage();
-            commentImage.setComment(comment);
-            commentImage.setImageData(BytesConverter.stringToBytes(commentDto.getImageData()));
-            commentImageRepository.save(commentImage);
+        boolean imageExists = !commentDto.getImageData().isBlank();
+        if (imageExists) {
+            createAndSaveImage(commentDto, comment);
         }
+    }
+
+    private void createAndSaveImage(CommentDto commentDto, Comment comment) {
+        CommentImage commentImage = new CommentImage();
+        commentImage.setComment(comment);
+        commentImage.setImageData(BytesConverter.stringToBytes(commentDto.getImageData()));
+        commentImageRepository.save(commentImage);
+    }
+
+    private void addUserToComment(CommentDto commentDto, Comment comment) {
+        User user = userRepository.findById(commentDto.getUserId()).get();
+        comment.setUser(user);
+    }
+
+    private void addLocationToComment(CommentDto commentDto, Comment comment) {
+        Location location = locationRepository.findByIdAndStatus(commentDto.getLocationId(), Status.ACTIVE.getCode()).get();
+        comment.setLocation(location);
     }
 }
