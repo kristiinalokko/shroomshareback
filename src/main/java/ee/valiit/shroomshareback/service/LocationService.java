@@ -34,7 +34,6 @@ public class LocationService {
     private final LocationMapper locationMapper;
     private final LocationImageRepository locationImageRepository;
     private final UserRepository userRepository;
-    private final LoginService loginService;
 
     public Integer addLocation(LocationDto locationDto) {
         Location location = setLocationData(locationDto);
