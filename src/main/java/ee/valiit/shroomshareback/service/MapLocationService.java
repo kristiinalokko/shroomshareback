@@ -3,6 +3,7 @@ package ee.valiit.shroomshareback.service;
 import ee.valiit.shroomshareback.controller.location.dto.LocationShortInfo;
 import ee.valiit.shroomshareback.controller.maplocation.dto.MapLocationsRequest;
 import ee.valiit.shroomshareback.persistence.location.Location;
+import ee.valiit.shroomshareback.persistence.location.LocationMapper;
 import ee.valiit.shroomshareback.persistence.shroomLocation.ShroomlocationRepository;
 import ee.valiit.shroomshareback.util.DistanceCalculator;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 public class MapLocationService {
 
     private final ShroomlocationRepository shroomlocationRepository;
+    private final LocationMapper LocationMapper;
 
     public List<LocationShortInfo> findFilteredShroomLocations(MapLocationsRequest request) {
         List<Location> locations = shroomlocationRepository.findFilteredShroomLocationsBy(request.getShroomId(), request.getMinRating(), request.getLastActive());
@@ -28,7 +30,9 @@ public class MapLocationService {
             }
         }
 
-        return null;
+
+        return LocationMapper.toLocationShortInfos(locationsGeoFiltered);
+
     }
 
     private boolean locationIsWithinRadius(Location location, MapLocationsRequest request) {
