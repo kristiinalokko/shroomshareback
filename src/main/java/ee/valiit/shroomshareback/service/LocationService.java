@@ -19,8 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,11 +30,37 @@ public class LocationService {
     private final LocationMapper locationMapper;
     private final LocationImageRepository locationImageRepository;
     private final UserRepository userRepository;
+    private final LoginService loginService;
 
     public void addLocation(LocationDto locationDto) {
         Location location = setLocationData(locationDto);
         locationRepository.save(location);
         saveLocationImageIfPresent(locationDto, location);
+    }
+
+    public void editLocation(LocationDto locationDto, Integer locationId) {
+        Location location = locationRepository.findById(locationId).
+                orElseThrow();
+        locationMapper.updateLocationFromDto(location, locationDto);
+        location.setStatus(Status.PENDING.getCode());
+        locationRepository.save(location);
+        saveLocationImageIfPresent(locationDto, location);
+    }
+    public List<LocationShortInfo> findAllLocations() {
+        List<Location> locations = locationRepository.findAll();
+        return locationMapper.toLocationShortInfos(locations);
+    }
+
+    public LocationInfo getLocationInfoByIdAndStatus(Integer locationId, String status) {
+        Optional<Location> optionalLocation = locationRepository.findByIdAndStatus(locationId, status);
+
+        if (optionalLocation.isPresent()) {
+            LocationInfo locationInfo = locationMapper.toLocationInfo(optionalLocation.get());
+            addImageIfExists(locationId, locationInfo);
+            return locationInfo;
+        } else {
+            throw new DataNotFoundException(Error.LOCATION_NOT_FOUND.getMessage(), Error.LOCATION_NOT_FOUND.getErrorCode());
+        }
     }
 
     private Location setLocationData(LocationDto locationDto) {
@@ -81,18 +105,6 @@ public class LocationService {
         return optionalUser.get();
     }
 
-    public LocationInfo getLocationInfoIfActive(Integer locationId) {
-        Optional<Location> optionalLocation = locationRepository.findByIdAndStatus(locationId, Status.ACTIVE.getCode());
-
-        if (optionalLocation.isPresent()) {
-            LocationInfo locationInfo = locationMapper.toLocationInfo(optionalLocation.get());
-            addImageIfExists(locationId, locationInfo);
-            return locationInfo;
-        } else {
-            throw new DataNotFoundException(Error.LOCATION_NOT_FOUND.getMessage(), Error.LOCATION_NOT_FOUND.getErrorCode());
-        }
-    }
-
     private void addImageIfExists(Integer locationId, LocationInfo locationInfo) {
         Optional<LocationImage> optionalImage = locationImageRepository.findImageByLocationId(locationId);
         if (optionalImage.isPresent()) {
@@ -102,16 +114,7 @@ public class LocationService {
         }
     }
 
-    public void editLocation(LocationDto locationDto, Integer locationId) {
-        Location location = locationRepository.findById(locationId).
-                orElseThrow();
-        locationMapper.updateLocationFromDto(location, locationDto);
-        location.setStatus(Status.PENDING.getCode());
-        locationRepository.save(location);
-        saveLocationImageIfPresent(locationDto, location);
-    }
-    public List<LocationShortInfo> findAllLocations() {
-        List<Location> locations = locationRepository.findAll();
-        return locationMapper.toLocationShortInfos(locations);
+    public void deactivateLocation(Integer locationId) {
+        locationRepository.deactivateLocation("D", locationId);
     }
 }

@@ -22,9 +22,9 @@ public class LocationController {
     private final ShroomLocationService shroomLocationService;
 
     @GetMapping("/location-info")
-    @Operation(summary = "Get user location info, but only if the location is ACTIVE")
-    public LocationInfo getLocationInfoIfActive(@RequestParam Integer locationId) {
-        return locationService.getLocationInfoIfActive(locationId);
+    @Operation(summary = "Get user location info based on locationId and the status code")
+    public LocationInfo getLocationInfoIfActive(@RequestParam Integer locationId, @RequestParam String status) {
+        return locationService.getLocationInfoByIdAndStatus(locationId, status);
     }
 
     @PostMapping("/location")
@@ -37,6 +37,12 @@ public class LocationController {
     @Operation(summary = "Edit location info")
     public void editLocation(@RequestBody LocationDto locationDto, @RequestParam Integer locationId) {
         locationService.editLocation(locationDto, locationId);
+    }
+
+    @PutMapping("/location-info")
+    @Operation(summary = "Kustutab/deaktiveerib asukoha databaasis")
+    public void deactivateLocation(@RequestParam Integer locationId) {
+        locationService.deactivateLocation(locationId);
     }
 
     @GetMapping("/map-locations/all")
