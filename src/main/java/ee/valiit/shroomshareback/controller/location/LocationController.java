@@ -19,7 +19,7 @@ public class LocationController {
 
     private final LocationService locationService;
     private final ShroomService shroomService;
-    private final ShroomLocationService shroomLocationService;
+
 
     @GetMapping("/location-info")
     @Operation(summary = "Get user location info, but only if the location is ACTIVE")
@@ -44,21 +44,4 @@ public class LocationController {
         return locationService.findAllLocations();
     }
 
-    @GetMapping("/location/shrooms")
-    @Operation(summary = "Get all location shrooms")
-    public List<ShroomBasicInfo> getLocationShrooms(@RequestParam Integer locationId) {
-        return shroomService.getLocationShrooms(locationId);
-    }
-
-    @PostMapping("/location/shroom")
-    @Operation(summary = "Add shroom to location")
-    public void addShroomLocation(@RequestParam Integer locationId, @RequestParam Integer shroomId) {
-        shroomLocationService.addShroomLocation(locationId, shroomId);
-    }
-
-    @DeleteMapping("/location/shroom")
-    @Operation(summary = "Delete shroom location")
-    public void deleteShroomLocation(@RequestParam Integer locationId, @RequestParam Integer shroomId) {
-        shroomLocationService.deleteShroomLocation(locationId, shroomId);
-    }
 }

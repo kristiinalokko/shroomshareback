@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static ee.valiit.shroomshareback.util.ShroomUtil.createAndSaveShroomBasicInfos;
+
 @Service
 @RequiredArgsConstructor
 
@@ -97,22 +99,6 @@ public class ShroomService {
         }
     }
 
-    public List<ShroomBasicInfo> getLocationShrooms(Integer locationId) {
-        List<Shroom> shrooms = shroomRepository.findShrooms(locationId);
-        if(shrooms.isEmpty()){
-            return null;
-        }
-        return createAndSaveShroomBasicInfos(shrooms);
-    }
 
-    private static List<ShroomBasicInfo> createAndSaveShroomBasicInfos(List<Shroom> shrooms) {
-        List<ShroomBasicInfo> shroomBasicInfos = new ArrayList<>();
-        for (Shroom shroom : shrooms) {
-            ShroomBasicInfo shroomBasicInfo = new ShroomBasicInfo();
-            shroomBasicInfo.setShroomId(shroom.getId());
-            shroomBasicInfo.setShroomName(shroom.getName());
-            shroomBasicInfos.add(shroomBasicInfo);
-        }
-        return shroomBasicInfos;
-    }
+
 }
