@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface LocationRepository extends JpaRepository<Location, Integer> {
 
+    @Override
     @Query("select l from Location l where l.id = :locationId")
     Optional<Location> findById(Integer locationId);
 

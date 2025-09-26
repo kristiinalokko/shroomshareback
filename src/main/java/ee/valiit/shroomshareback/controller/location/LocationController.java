@@ -19,8 +19,8 @@ public class LocationController {
 
 
     @GetMapping("/location-info")
-    @Operation(summary = "Get user location info based on locationId and the status code")
-    public LocationInfo getLocationInfoIfActive(@RequestParam Integer locationId) {
+    @Operation(summary = "Get user location info, returns location info with status")
+    public LocationInfo getLocationInfo(@RequestParam Integer locationId) {
         return locationService.getLocationInfo(locationId);
     }
 
