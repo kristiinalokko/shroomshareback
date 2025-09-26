@@ -19,8 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,10 +31,11 @@ public class LocationService {
     private final LocationImageRepository locationImageRepository;
     private final UserRepository userRepository;
 
-    public void addLocation(LocationDto locationDto) {
+    public Integer addLocation(LocationDto locationDto) {
         Location location = setLocationData(locationDto);
         locationRepository.save(location);
         saveLocationImageIfPresent(locationDto, location);
+        return location.getId();
     }
 
     private Location setLocationData(LocationDto locationDto) {

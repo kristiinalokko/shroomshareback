@@ -29,8 +29,8 @@ public class LocationController {
 
     @PostMapping("/location")
     @Operation(summary = "add new location")
-    public void addLocation(@RequestBody LocationDto locationDto) {
-        locationService.addLocation(locationDto);
+    public Integer addLocation(@RequestBody LocationDto locationDto) {
+        return locationService.addLocation(locationDto);
     }
 
     @PutMapping("/location")
