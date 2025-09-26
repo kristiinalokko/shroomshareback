@@ -95,7 +95,7 @@ public class CommentService {
     }
 
     private void addLocationToComment(CommentDto commentDto, Comment comment) {
-        Location location = locationRepository.findByIdAndStatus(commentDto.getLocationId(), Status.ACTIVE.getCode()).get();
+        Location location = locationRepository.findById(commentDto.getLocationId()).get();
         comment.setLocation(location);
     }
 }

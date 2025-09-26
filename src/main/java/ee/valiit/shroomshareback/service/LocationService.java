@@ -52,8 +52,8 @@ public class LocationService {
         return locationMapper.toLocationShortInfos(locations);
     }
 
-    public LocationInfo getLocationInfoByIdAndStatus(Integer locationId, String status) {
-        Optional<Location> optionalLocation = locationRepository.findByIdAndStatus(locationId, status);
+    public LocationInfo getLocationInfo(Integer locationId) {
+        Optional<Location> optionalLocation = locationRepository.findById(locationId);
 
         if (optionalLocation.isPresent()) {
             LocationInfo locationInfo = locationMapper.toLocationInfo(optionalLocation.get());

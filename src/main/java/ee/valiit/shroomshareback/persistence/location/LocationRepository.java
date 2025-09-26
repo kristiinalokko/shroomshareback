@@ -10,8 +10,8 @@ import java.util.Optional;
 
 public interface LocationRepository extends JpaRepository<Location, Integer> {
 
-    @Query("select l from Location l where l.id = :locationId and l.status = :status")
-    Optional<Location> findByIdAndStatus(Integer locationId, String status);
+    @Query("select l from Location l where l.id = :locationId")
+    Optional<Location> findById(Integer locationId);
 
     @Modifying
     @Query("update Location l set l.avgRating = :locationAverageRating, l.lastActive = :date where l.id = :locationId")

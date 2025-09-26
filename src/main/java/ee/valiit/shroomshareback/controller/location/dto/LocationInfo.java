@@ -23,4 +23,6 @@ public class LocationInfo extends LocationDto implements Serializable {
     private String username;
     private String createdAt;
     private BigDecimal avgRating;
+    private String status;
+
 }

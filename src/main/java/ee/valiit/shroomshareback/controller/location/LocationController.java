@@ -3,9 +3,7 @@ package ee.valiit.shroomshareback.controller.location;
 import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
 import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
 import ee.valiit.shroomshareback.controller.location.dto.LocationShortInfo;
-import ee.valiit.shroomshareback.controller.shroom.dto.ShroomBasicInfo;
 import ee.valiit.shroomshareback.service.LocationService;
-import ee.valiit.shroomshareback.service.ShroomLocationService;
 import ee.valiit.shroomshareback.service.ShroomService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +21,8 @@ public class LocationController {
 
     @GetMapping("/location-info")
     @Operation(summary = "Get user location info based on locationId and the status code")
-    public LocationInfo getLocationInfoIfActive(@RequestParam Integer locationId, @RequestParam String status) {
-        return locationService.getLocationInfoByIdAndStatus(locationId, status);
+    public LocationInfo getLocationInfoIfActive(@RequestParam Integer locationId) {
+        return locationService.getLocationInfo(locationId);
     }
 
     @PostMapping("/location")

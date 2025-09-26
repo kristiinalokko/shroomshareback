@@ -21,7 +21,7 @@ public interface LocationMapper {
     @Mapping(source = "latitude", target = "latitude")
     @Mapping(source = "longitude", target = "longitude")
     @Mapping(source = "description", target = "description")
-//    @Mapping(source = "", target = "locationImage")
+    @Mapping(source = "status", target = "status")
     @Mapping(source = "user.username", target = "username")
     @Mapping(source = "created", target = "createdAt")
     @Mapping(source = "avgRating", target = "avgRating")
