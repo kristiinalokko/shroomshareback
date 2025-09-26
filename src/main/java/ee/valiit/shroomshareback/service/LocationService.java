@@ -1,5 +1,6 @@
 package ee.valiit.shroomshareback.service;
 
+import ee.valiit.shroomshareback.Error;
 import ee.valiit.shroomshareback.Status;
 import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
 import ee.valiit.shroomshareback.Error;
@@ -11,11 +12,14 @@ import ee.valiit.shroomshareback.persistence.location.LocationMapper;
 import ee.valiit.shroomshareback.persistence.location.LocationRepository;
 import ee.valiit.shroomshareback.persistence.locationImge.LocationImage;
 import ee.valiit.shroomshareback.persistence.locationImge.LocationImageRepository;
+import ee.valiit.shroomshareback.persistence.shroomLocation.ShroomLocation;
+import ee.valiit.shroomshareback.persistence.shroomLocation.ShroomlocationRepository;
 import ee.valiit.shroomshareback.persistence.user.User;
 import ee.valiit.shroomshareback.persistence.user.UserRepository;
 import ee.valiit.shroomshareback.util.BytesConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import java.util.stream.Collectors;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
