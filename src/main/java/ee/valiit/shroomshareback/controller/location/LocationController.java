@@ -57,8 +57,8 @@ public class LocationController {
     }
 
     @DeleteMapping("/location/shroom")
-    @Operation(summary = "Delete location shroom")
+    @Operation(summary = "Delete shroom location")
     public void deleteShroomLocation(@RequestParam Integer locationId, @RequestParam Integer shroomId) {
-
+        shroomLocationService.deleteShroomLocation(locationId, shroomId);
     }
 }

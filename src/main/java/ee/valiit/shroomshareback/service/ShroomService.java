@@ -60,7 +60,7 @@ public class ShroomService {
         }
     }
     private void setShroomLocations(ShroomInfo shroomInfo, Integer shroomId) {
-        List<ShroomLocation> shroomLocations = shroomLocationRepository.findShroomLocationByShroom_Id(shroomId);
+        List<ShroomLocation> shroomLocations = shroomLocationRepository.findShroomLocations(shroomId);
         List<SimplifiedLocation> locations = mapToSimplifiedLocations(shroomLocations);
         shroomInfo.setLocations(locations);
     }
