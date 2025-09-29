@@ -22,8 +22,9 @@ public interface ShroomlocationRepository extends JpaRepository<ShroomLocation, 
 
     @Query("""
             select distinct s.location from ShroomLocation s
-            where s.shroom.id = :shroomId and s.location.avgRating >= :minRating and s.location.lastActive >= :lastActive group by s.location""")
+            where (:shroomId is null or s.shroom.id = :shroomId) 
+            and s.location.avgRating >= :minRating 
+            and s.location.lastActive >= :lastActive 
+            group by s.location""")
     List<Location> findFilteredShroomLocationsBy(Integer shroomId, BigDecimal minRating, LocalDate lastActive);
-
-
 }
