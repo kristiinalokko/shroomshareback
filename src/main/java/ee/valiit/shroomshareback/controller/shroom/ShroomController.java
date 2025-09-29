@@ -1,9 +1,6 @@
 package ee.valiit.shroomshareback.controller.shroom;
 
-import ee.valiit.shroomshareback.controller.shroom.dto.ShroomBasicInfo;
-import ee.valiit.shroomshareback.controller.shroom.dto.ShroomDto;
-import ee.valiit.shroomshareback.controller.shroom.dto.ShroomInfo;
-import ee.valiit.shroomshareback.controller.shroom.dto.ShroomProfile;
+import ee.valiit.shroomshareback.controller.shroom.dto.*;
 import ee.valiit.shroomshareback.service.ShroomService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +34,13 @@ public class ShroomController {
 
     @GetMapping("allShrooms")
     @Operation(summary = "Gets information for the shroom table, returns a list")
-    public List<ShroomDto> getAllShrooms() {
+    public List<ShroomWithUsername> getAllShrooms() {
         return shroomService.getAllShrooms();
+    }
+
+    @PutMapping("/shroom")
+    @Operation(summary = "Edit shroom")
+    public void editShroom(@RequestBody ShroomDto shroomDto) {
+        shroomService.editShroom(shroomDto);
     }
 }

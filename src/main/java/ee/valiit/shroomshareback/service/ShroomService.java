@@ -3,10 +3,7 @@ package ee.valiit.shroomshareback.service;
 import ee.valiit.shroomshareback.Error;
 import ee.valiit.shroomshareback.Status;
 import ee.valiit.shroomshareback.controller.location.dto.SimplifiedLocation;
-import ee.valiit.shroomshareback.controller.shroom.dto.ShroomBasicInfo;
-import ee.valiit.shroomshareback.controller.shroom.dto.ShroomDto;
-import ee.valiit.shroomshareback.controller.shroom.dto.ShroomInfo;
-import ee.valiit.shroomshareback.controller.shroom.dto.ShroomProfile;
+import ee.valiit.shroomshareback.controller.shroom.dto.*;
 import ee.valiit.shroomshareback.infrastructure.exception.DataNotFoundException;
 import ee.valiit.shroomshareback.persistence.shroom.Shroom;
 import ee.valiit.shroomshareback.persistence.shroom.ShroomMapper;
@@ -100,10 +97,15 @@ public class ShroomService {
         }
     }
 
-
-    public List<ShroomDto> getAllShrooms() {
+    public List<ShroomWithUsername> getAllShrooms() {
         List<Shroom> shrooms = shroomRepository.findAll();
-        List<ShroomDto> shroomDtos = shroomMapper.toShroomDtos(shrooms);
-        return shroomDtos;
+        return shroomMapper.toShroomWithUsernames(shrooms);
+    }
+
+    public void editShroom(ShroomDto shroomDto) {
+        User user = userRepository.findUserById(shroomDto.getUserId());
+        Shroom shroom = shroomMapper.shroomDtoToShroom(shroomDto);
+        shroom.setStatus(Status.PENDING.getCode());
+        shroom.setUser(user);
     }
 }

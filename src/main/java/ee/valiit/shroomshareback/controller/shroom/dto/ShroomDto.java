@@ -17,8 +17,10 @@ import java.io.Serializable;
 public class ShroomDto implements Serializable {
     @NotNull
     private Integer shroomId;
+    @NotNull
     private Integer userId;
-    private String username;
+//    @NotNull
+//    private String username;
     @NotNull
     @Size(max = 255)
     private String name;

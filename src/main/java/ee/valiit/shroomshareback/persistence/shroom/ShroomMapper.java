@@ -3,6 +3,7 @@ package ee.valiit.shroomshareback.persistence.shroom;
 import ee.valiit.shroomshareback.controller.shroom.dto.ShroomDto;
 import ee.valiit.shroomshareback.controller.shroom.dto.ShroomInfo;
 import ee.valiit.shroomshareback.controller.shroom.dto.ShroomProfile;
+import ee.valiit.shroomshareback.controller.shroom.dto.ShroomWithUsername;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -26,7 +27,11 @@ public interface ShroomMapper {
     @Mapping(source = "description", target = "description")
     @Mapping(source = "user.username", target = "username")
     @Mapping(source = "status", target = "status")
-    ShroomDto toShroomDto(Shroom shroom);
+    ShroomWithUsername toShroomWithUsername(Shroom shroom);
 
-    List<ShroomDto> toShroomDtos(List<Shroom> shrooms);
+    List<ShroomWithUsername> toShroomWithUsernames(List<Shroom> shrooms);
+
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "description", target = "description")
+    Shroom shroomDtoToShroom(ShroomDto shroomDto);
 }
