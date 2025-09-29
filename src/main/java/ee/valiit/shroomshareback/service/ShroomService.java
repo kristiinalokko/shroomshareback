@@ -83,6 +83,16 @@ public class ShroomService {
 
     public void addShroom(ShroomProfile shroomProfile) {
         Shroom shroom = shroomMapper.shroomProfileToShroom(shroomProfile);
+        addOrUpdateShroom(shroomProfile, shroom);
+    }
+
+    public void editShroom(ShroomProfile shroomProfile, Integer shroomId) {
+        Shroom shroom = findShroomById(shroomId);
+        shroomMapper.updateShroomFromShroomProfile(shroomProfile, shroom);
+        addOrUpdateShroom(shroomProfile, shroom);
+    }
+
+    private void addOrUpdateShroom(ShroomProfile shroomProfile, Shroom shroom) {
         User user = userRepository.findUserById(shroomProfile.getUserId());
         shroom.setUser(user);
         shroom.setStatus(Status.PENDING.getCode());
@@ -97,15 +107,9 @@ public class ShroomService {
         }
     }
 
+
     public List<ShroomWithUsername> getAllShrooms() {
         List<Shroom> shrooms = shroomRepository.findAll();
         return shroomMapper.toShroomWithUsernames(shrooms);
-    }
-
-    public void editShroom(ShroomDto shroomDto) {
-        User user = userRepository.findUserById(shroomDto.getUserId());
-        Shroom shroom = shroomMapper.shroomDtoToShroom(shroomDto);
-        shroom.setStatus(Status.PENDING.getCode());
-        shroom.setUser(user);
     }
 }

@@ -33,5 +33,5 @@ public interface ShroomMapper {
 
     @Mapping(source = "name", target = "name")
     @Mapping(source = "description", target = "description")
-    Shroom shroomDtoToShroom(ShroomDto shroomDto);
+    Shroom updateShroomFromShroomProfile(ShroomProfile shroomProfile,@MappingTarget Shroom shroom);
 }
