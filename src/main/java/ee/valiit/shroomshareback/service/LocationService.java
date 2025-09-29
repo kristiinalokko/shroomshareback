@@ -57,12 +57,16 @@ public class LocationService {
         Optional<Location> optionalLocation = locationRepository.findById(locationId);
 
         if (optionalLocation.isPresent()) {
-            LocationInfo locationInfo = locationMapper.toLocationInfo(optionalLocation.get());
-            addImageIfExists(locationId, locationInfo);
-            return locationInfo;
+            return createAndSetLocationInfo(locationId, optionalLocation);
         } else {
             throw new DataNotFoundException(Error.LOCATION_NOT_FOUND.getMessage(), Error.LOCATION_NOT_FOUND.getErrorCode());
         }
+    }
+
+    private LocationInfo createAndSetLocationInfo(Integer locationId, Optional<Location> optionalLocation) {
+        LocationInfo locationInfo = locationMapper.toLocationInfo(optionalLocation.get());
+        addImageIfExists(locationId, locationInfo);
+        return locationInfo;
     }
 
     private Location setLocationData(LocationDto locationDto) {

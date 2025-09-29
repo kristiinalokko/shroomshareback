@@ -35,25 +35,50 @@ public class CommentService {
     private final UserRepository userRepository;
 
     public List<CommentData> getComments(Integer locationId) {
-        Optional<List<Comment>> optionalComments = commentRepository.findByLocationId(locationId);
+        List<Comment> comments = commentRepository.findByLocationId(locationId)
+                .orElseThrow(() -> new DataNotFoundException(Error.COMMENT_NOT_FOUND.getMessage(), Error.COMMENT_NOT_FOUND.getErrorCode()));
 
-        if (optionalComments.isPresent()) {
+        List<CommentData> commentDatas = createAndSetCommentDatas(comments);
 
-            List<Comment> comments = optionalComments.get();
-            List<CommentData> commentDatas = new ArrayList<>();
+        return commentDatas;
+    }
 
-            for (Comment comment : comments) {
-                CommentData commentData = (commentMapper.toCommentData(comment));
-                Optional<CommentImage> optionalCommentImage = commentImageRepository.findByCommentId(comment.getId());
-                handleImage(optionalCommentImage, commentData);
-                commentDatas.add(commentData);
-            }
+    @Transactional
+    public void addComment(CommentDto commentDto) {
+        Comment comment = createAndSaveComment(commentDto);
 
-            return commentDatas;
-        } else {
-            throw new DataNotFoundException(Error.COMMENT_NOT_FOUND.getMessage(), Error.COMMENT_NOT_FOUND.getErrorCode());
+        Integer locationAverageRating = commentRepository.findLocationAverageRating(commentDto.getLocationId());
+        locationRepository.updateAvgRatingAndLastActive(locationAverageRating, LocalDate.now(), commentDto.getLocationId());
+
+        if (imageExists(commentDto)) {
+            createAndSaveImage(commentDto, comment);
         }
+    }
 
+    private static boolean imageExists(CommentDto commentDto) {
+        return !commentDto.getImageData().isBlank();
+    }
+
+    private Comment createAndSaveComment(CommentDto commentDto) {
+        Comment comment = commentMapper.toComment(commentDto);
+        addLocationToComment(commentDto, comment);
+        addUserToComment(commentDto, comment);
+        comment.setCreated(LocalDate.now());
+        comment.setStatus(Status.ACTIVE.getCode());
+        commentRepository.save(comment);
+        return comment;
+    }
+
+    private List<CommentData> createAndSetCommentDatas(List<Comment> comments) {
+        List<CommentData> commentDatas = new ArrayList<>();
+
+        for (Comment comment : comments) {
+            CommentData commentData = (commentMapper.toCommentData(comment));
+            Optional<CommentImage> optionalCommentImage = commentImageRepository.findByCommentId(comment.getId());
+            handleImage(optionalCommentImage, commentData);
+            commentDatas.add(commentData);
+        }
+        return commentDatas;
     }
 
     private static void handleImage(Optional<CommentImage> optionalCommentImage, CommentData commentData) {
@@ -61,24 +86,6 @@ public class CommentService {
             commentData.setImageData(BytesConverter.bytesToString(optionalCommentImage.get().getImageData()));
         } else {
             commentData.setImageData("");
-        }
-    }
-
-    @Transactional
-    public void addComment(CommentDto commentDto) {
-        Comment comment = commentMapper.toComment(commentDto);
-        addLocationToComment(commentDto, comment);
-        addUserToComment(commentDto, comment);
-        comment.setCreated(LocalDate.now());
-        comment.setStatus(Status.ACTIVE.getCode());
-        commentRepository.save(comment);
-
-        Integer locationAverageRating = commentRepository.findLocationAverageRating(commentDto.getLocationId());
-        locationRepository.updateAvgRatingAndLastActive(locationAverageRating, LocalDate.now(), commentDto.getLocationId());
-
-        boolean imageExists = !commentDto.getImageData().isBlank();
-        if (imageExists) {
-            createAndSaveImage(commentDto, comment);
         }
     }
 

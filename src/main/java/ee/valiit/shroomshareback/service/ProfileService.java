@@ -25,19 +25,28 @@ public class ProfileService {
     public ProfileData getProfile(Integer userId) {
         Optional<Profile> optionalProfile = profileRepository.findByUserId(userId);
         if (optionalProfile.isPresent()) {
-            Profile profile = optionalProfile.get();
-            ProfileData profileData = profileMapper.toProfileData(profile);
-            Optional<UserImage> optionalUserImage = userImageRepository.findByUserId(userId);
-            if (optionalUserImage.isPresent()) {
-                profileData.setImageData(BytesConverter.bytesToString(optionalUserImage.get().getImageData()));
-            } else {
-                profileData.setImageData("");
-            }
+            ProfileData profileData = createAndSetProfileData(userId, optionalProfile);
             return profileData;
         } else {
             throw new DataNotFoundException(Error.PROFILE_NOT_FOUND.getMessage(), Error.PROFILE_NOT_FOUND.getErrorCode());
         }
 
 
+    }
+
+    private ProfileData createAndSetProfileData(Integer userId, Optional<Profile> optionalProfile) {
+        Profile profile = optionalProfile.get();
+        ProfileData profileData = profileMapper.toProfileData(profile);
+        handleImageIfexists(userId, profileData);
+        return profileData;
+    }
+
+    private void handleImageIfexists(Integer userId, ProfileData profileData) {
+        Optional<UserImage> optionalUserImage = userImageRepository.findByUserId(userId);
+        if (optionalUserImage.isPresent()) {
+            profileData.setImageData(BytesConverter.bytesToString(optionalUserImage.get().getImageData()));
+        } else {
+            profileData.setImageData("");
+        }
     }
 }

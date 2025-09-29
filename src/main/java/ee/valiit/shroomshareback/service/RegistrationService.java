@@ -11,8 +11,6 @@ import ee.valiit.shroomshareback.persistence.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class RegistrationService {
@@ -26,15 +24,22 @@ public class RegistrationService {
 
     public void addUser(RegisterInfo registerInfo) {
         String username = registerInfo.getUsername();
-        Optional<User> optionalUser = userRepository.findUserByUsername(username);
-        if (optionalUser.isEmpty()) {
-            User user = userMapper.toUser(registerInfo);
-            Role role = roleRepository.getRoleByRoleName(ROLE_NAME_USER);
-            user.setRole(role);
-            userRepository.save(user);
-        } else {
+        if (userNameExists(username)) {
             throw new ForbiddenException(Error.INCORRECT_USERNAME.getMessage(), Error.INCORRECT_USERNAME.getErrorCode());
+        } else {
+            createAndAddUser(registerInfo);
         }
 
+    }
+
+    private boolean userNameExists(String username) {
+        return userRepository.findUserByUsername(username).isPresent();
+    }
+
+    private void createAndAddUser(RegisterInfo registerInfo) {
+        User user = userMapper.toUser(registerInfo);
+        Role role = roleRepository.getRoleByRoleName(ROLE_NAME_USER);
+        user.setRole(role);
+        userRepository.save(user);
     }
 }
