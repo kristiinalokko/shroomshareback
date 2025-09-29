@@ -17,4 +17,5 @@ public interface ShroomRepository extends JpaRepository<Shroom, Integer> {
 
     @Query("select s from Shroom s where s.id = :shroomId")
     Shroom findShroom(Integer shroomId);
+
 }

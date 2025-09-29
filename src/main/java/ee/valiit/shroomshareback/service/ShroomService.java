@@ -4,6 +4,7 @@ import ee.valiit.shroomshareback.Error;
 import ee.valiit.shroomshareback.Status;
 import ee.valiit.shroomshareback.controller.location.dto.SimplifiedLocation;
 import ee.valiit.shroomshareback.controller.shroom.dto.ShroomBasicInfo;
+import ee.valiit.shroomshareback.controller.shroom.dto.ShroomDto;
 import ee.valiit.shroomshareback.controller.shroom.dto.ShroomInfo;
 import ee.valiit.shroomshareback.controller.shroom.dto.ShroomProfile;
 import ee.valiit.shroomshareback.infrastructure.exception.DataNotFoundException;
@@ -100,5 +101,9 @@ public class ShroomService {
     }
 
 
-
+    public List<ShroomDto> getAllShrooms() {
+        List<Shroom> shrooms = shroomRepository.findAll();
+        List<ShroomDto> shroomDtos = shroomMapper.toShroomDtos(shrooms);
+        return shroomDtos;
+    }
 }

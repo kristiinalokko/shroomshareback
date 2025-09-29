@@ -1,6 +1,7 @@
 package ee.valiit.shroomshareback.controller.shroom;
 
 import ee.valiit.shroomshareback.controller.shroom.dto.ShroomBasicInfo;
+import ee.valiit.shroomshareback.controller.shroom.dto.ShroomDto;
 import ee.valiit.shroomshareback.controller.shroom.dto.ShroomInfo;
 import ee.valiit.shroomshareback.controller.shroom.dto.ShroomProfile;
 import ee.valiit.shroomshareback.service.ShroomService;
@@ -18,7 +19,7 @@ public class ShroomController {
 
     @PostMapping("/shroom")
     @Operation(summary = "Add shroom")
-    public void addShroom(@RequestBody ShroomProfile shroomProfile){
+    public void addShroom(@RequestBody ShroomProfile shroomProfile) {
         shroomService.addShroom(shroomProfile);
     }
 
@@ -31,7 +32,12 @@ public class ShroomController {
     @GetMapping("/shrooms")
     @Operation(summary = "Get all shrooms")
     public List<ShroomBasicInfo> getShrooms() {
-       return shroomService.getShrooms();
+        return shroomService.getShrooms();
     }
 
+    @GetMapping("allShrooms")
+    @Operation(summary = "Gets information for the shroom table, returns a list")
+    public List<ShroomDto> getAllShrooms() {
+        return shroomService.getAllShrooms();
+    }
 }
