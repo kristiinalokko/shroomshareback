@@ -19,6 +19,8 @@ public class ShroomProfile implements Serializable {
     @NotNull
     private Integer userId;
     @NotNull
+    private String username;
+    @NotNull
     @Size(max = 255)
     private String name;
     @Size(max = 255)

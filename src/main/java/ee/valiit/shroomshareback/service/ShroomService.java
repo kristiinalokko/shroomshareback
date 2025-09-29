@@ -5,6 +5,7 @@ import ee.valiit.shroomshareback.Status;
 import ee.valiit.shroomshareback.controller.location.dto.SimplifiedLocation;
 import ee.valiit.shroomshareback.controller.shroom.dto.*;
 import ee.valiit.shroomshareback.infrastructure.exception.DataNotFoundException;
+import ee.valiit.shroomshareback.infrastructure.exception.PrimaryKeyNotFoundException;
 import ee.valiit.shroomshareback.persistence.shroom.Shroom;
 import ee.valiit.shroomshareback.persistence.shroom.ShroomMapper;
 import ee.valiit.shroomshareback.persistence.shroom.ShroomRepository;
@@ -35,19 +36,16 @@ public class ShroomService {
     private final UserRepository userRepository;
 
     public ShroomInfo getShroom(Integer shroomId) {
-        Shroom shroom = findShroomById(shroomId);
+        Shroom shroom = getValidShroom(shroomId);
         ShroomInfo shroomInfo = shroomMapper.toShroomInfo(shroom);
         setShroomImage(shroomInfo, shroomId);
         setShroomLocations(shroomInfo, shroomId);
         return shroomInfo;
     }
 
-    private Shroom findShroomById(Integer shroomId) {
-        Optional<Shroom> optionalShroom = shroomRepository.findShrooms(shroomId, Status.ACTIVE.getCode());
-        if (optionalShroom.isEmpty()) {
-            throw new DataNotFoundException(Error.SHROOM_NOT_FOUND.getMessage(), Error.SHROOM_NOT_FOUND.getErrorCode());
-        }
-        return optionalShroom.get();
+    private Shroom getValidShroom(Integer shroomId) {
+        return shroomRepository.findShrooms(shroomId, Status.ACTIVE.getCode())
+                .orElseThrow(() -> new DataNotFoundException(Error.SHROOM_NOT_FOUND.getMessage(), Error.SHROOM_NOT_FOUND.getErrorCode()));
     }
 
     private void setShroomImage(ShroomInfo shroomInfo, Integer shroomId){
@@ -81,31 +79,58 @@ public class ShroomService {
         return createAndSaveShroomBasicInfos(shrooms);
     }
 
-    public void addShroom(ShroomProfile shroomProfile) {
-        Shroom shroom = shroomMapper.shroomProfileToShroom(shroomProfile);
-        addOrUpdateShroom(shroomProfile, shroom);
+    public void addShroom(Integer userId, ShroomProfile shroomProfile) {
+        Shroom shroom = createAndSaveShroom(userId, shroomProfile);
+        handleShroomImage(shroomProfile, shroom);
     }
 
-    public void editShroom(ShroomProfile shroomProfile, Integer shroomId) {
-        Shroom shroom = findShroomById(shroomId);
-        shroomMapper.updateShroomFromShroomProfile(shroomProfile, shroom);
-        addOrUpdateShroom(shroomProfile, shroom);
-    }
-
-    private void addOrUpdateShroom(ShroomProfile shroomProfile, Shroom shroom) {
-        User user = userRepository.findUserById(shroomProfile.getUserId());
-        shroom.setUser(user);
-        shroom.setStatus(Status.PENDING.getCode());
+    private Shroom createAndSaveShroom(Integer userId, ShroomProfile shroomProfile) {
+        User user = getValidUser(userId);
+        Shroom shroom = createShroom(user, shroomProfile);
         shroomRepository.save(shroom);
+        return shroom;
+    }
 
-        if (!shroomProfile.getShroomImage().isEmpty()){
-            byte[] imageData = BytesConverter.stringToBytes(shroomProfile.getShroomImage());
-            ShroomImage shroomImage = new ShroomImage();
-            shroomImage.setShroom(shroom);
-            shroomImage.setImageData(imageData);
-            shroomImageRepository.save(shroomImage);
+    private Shroom createShroom(User user, ShroomProfile shroomProfile) {
+        Shroom shroom = shroomMapper.shroomProfileToShroom(shroomProfile);
+        shroom.setUser(user);
+        return shroom;
+    }
+
+    private void handleShroomImage(ShroomProfile shroomProfile, Shroom shroom) {
+        if (shroomHasImage(shroomProfile)){
+            createAndSaveShroomImage(shroomProfile, shroom);
         }
     }
+
+    private void createAndSaveShroomImage(ShroomProfile shroomProfile, Shroom shroom) {
+        ShroomImage shroomImage = createShroomImage(shroomProfile, shroom);
+        shroomImageRepository.save(shroomImage);
+    }
+
+    private static ShroomImage createShroomImage(ShroomProfile shroomProfile, Shroom shroom) {
+        byte[] imageData = BytesConverter.stringToBytes(shroomProfile.getShroomImage());
+        ShroomImage shroomImage = new ShroomImage();
+        shroomImage.setShroom(shroom);
+        shroomImage.setImageData(imageData);
+        return shroomImage;
+    }
+
+    private static boolean shroomHasImage(ShroomProfile shroomProfile) {
+        return !shroomProfile.getShroomImage().isEmpty();
+    }
+
+    private User getValidUser(Integer userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new PrimaryKeyNotFoundException("userId", userId));
+    }
+
+    public void editShroom(Integer shroomId, ShroomProfile shroomProfile) {
+        Shroom shroom = getValidShroom(shroomId);
+        shroomMapper.updateShroomFromShroomProfile(shroomProfile, shroom);
+        handleShroomImage(shroomProfile, shroom);
+    }
+
+
 
 
     public List<ShroomWithUsername> getAllShrooms() {
