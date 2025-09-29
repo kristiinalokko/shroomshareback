@@ -35,9 +35,9 @@ public class MapLocationController {
             )
     })
     public List<LocationShortInfo> findFilteredShroomLocations(
-            @RequestParam Integer shroomId,
-            @RequestParam BigDecimal minRating,
-            @RequestParam String lastActive,
+            @RequestParam(required = false) Integer shroomId,
+            @RequestParam(required = false, defaultValue = "0.0") BigDecimal minRating,
+            @RequestParam(required = false, defaultValue = "") String lastActive,
             @RequestParam BigDecimal latitude,
             @RequestParam BigDecimal longitude,
             @RequestParam Integer radiusKm
