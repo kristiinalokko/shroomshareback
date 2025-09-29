@@ -9,6 +9,7 @@ public enum Error {
     INCORRECT_USERNAME("Kasutajanimi on juba kasutusel", 888),
     LOCATION_NOT_FOUND("Sellist asukohta ei leidnud", 999),
     COMMENT_NOT_FOUND("Selle asukohta kohta ei leidnud kommentaare", 555),
+    PROFILE_NOT_FOUND("Kasutajal puudub profiil", 343),
     SHROOM_NOT_FOUND("Sellist seent ei leitud", 777);
 
     private final String message;

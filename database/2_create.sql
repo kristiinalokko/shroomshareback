@@ -65,6 +65,14 @@ CREATE TABLE location_image (
     CONSTRAINT location_image_pk PRIMARY KEY (id)
 );
 
+-- Table: location_image
+CREATE TABLE user_image (
+    id serial  NOT NULL,
+    user_id int  NOT NULL,
+    image_data bytea  NOT NULL,
+    CONSTRAINT user_image_pk PRIMARY KEY (id)
+);
+
 -- Table: profile
 CREATE TABLE profile (
     id serial  NOT NULL,
