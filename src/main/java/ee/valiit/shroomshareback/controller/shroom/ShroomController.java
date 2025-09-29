@@ -40,7 +40,7 @@ public class ShroomController {
 
     @PutMapping("/shroom")
     @Operation(summary = "Edit shroom")
-    public void editShroom(@RequestBody ShroomDto shroomDto) {
-        shroomService.editShroom(shroomDto);
+    public void editShroom(@RequestBody ShroomProfile shroomProfile, @RequestParam Integer shroomId) {
+        shroomService.editShroom(shroomProfile,shroomId);
     }
 }
