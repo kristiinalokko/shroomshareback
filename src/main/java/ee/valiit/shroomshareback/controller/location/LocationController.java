@@ -3,8 +3,8 @@ package ee.valiit.shroomshareback.controller.location;
 import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
 import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
 import ee.valiit.shroomshareback.controller.location.dto.LocationShortInfo;
+import ee.valiit.shroomshareback.controller.location.dto.LocationTableInfo;
 import ee.valiit.shroomshareback.service.LocationService;
-import ee.valiit.shroomshareback.service.ShroomService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -47,4 +47,8 @@ public class LocationController {
         return locationService.findAllLocations();
     }
 
+    @GetMapping("/locationsTable")
+    public List<LocationTableInfo> getAllLocationTableInfos() {
+        return locationService.getAllLocationTableInfos();
+    }
 }

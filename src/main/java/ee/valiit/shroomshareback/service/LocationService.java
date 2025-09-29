@@ -5,6 +5,7 @@ import ee.valiit.shroomshareback.Status;
 import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
 import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
 import ee.valiit.shroomshareback.controller.location.dto.LocationShortInfo;
+import ee.valiit.shroomshareback.controller.location.dto.LocationTableInfo;
 import ee.valiit.shroomshareback.infrastructure.exception.DataNotFoundException;
 import ee.valiit.shroomshareback.persistence.location.Location;
 import ee.valiit.shroomshareback.persistence.location.LocationMapper;
@@ -117,5 +118,11 @@ public class LocationService {
 
     public void deactivateLocation(Integer locationId) {
         locationRepository.deactivateLocation("D", locationId);
+    }
+
+    public List<LocationTableInfo> getAllLocationTableInfos() {
+        List<Location> locations = locationRepository.findAll();
+        List<LocationTableInfo> locationTableInfos = locationMapper.toLocationTableInfos(locations);
+        return locationTableInfos;
     }
 }

@@ -3,6 +3,7 @@ package ee.valiit.shroomshareback.persistence.location;
 import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
 import ee.valiit.shroomshareback.Status;
 import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
+import ee.valiit.shroomshareback.controller.location.dto.LocationTableInfo;
 import org.mapstruct.*;
 import ee.valiit.shroomshareback.controller.location.dto.LocationShortInfo;
 import org.mapstruct.Mapper;
@@ -53,5 +54,13 @@ public interface LocationMapper {
 
     List<LocationShortInfo> toLocationShortInfos(List<Location> locations);
 
+    @Mapping(source = "id", target = "locationId")
+    @Mapping(source = "name", target = "locationName")
+    @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "user.username", target = "username")
+    @Mapping(source = "description", target = "description")
+    @Mapping(source = "status", target = "status")
+    LocationTableInfo toLocationTableInfo(Location location);
 
+    List<LocationTableInfo> toLocationTableInfos(List<Location> locations);
 }
