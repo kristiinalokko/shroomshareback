@@ -1,5 +1,6 @@
 package ee.valiit.shroomshareback.persistence.user;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,7 +17,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findUserByUsername(String username);
 
     @Query("select u from User u where u.id = :userId")
-    List<User> getUsers(Integer userId);
+    User findUserById(Integer userId);
 
 //    @Override
 //    @Query("select u from User u where u.id = :userId")

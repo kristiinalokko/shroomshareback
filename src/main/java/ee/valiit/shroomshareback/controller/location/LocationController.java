@@ -5,10 +5,6 @@ import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
 import ee.valiit.shroomshareback.controller.location.dto.LocationShortInfo;
 import ee.valiit.shroomshareback.service.LocationService;
 import ee.valiit.shroomshareback.service.ShroomService;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +16,6 @@ import java.util.List;
 public class LocationController {
 
     private final LocationService locationService;
-    private final ShroomService shroomService;
 
 
     @GetMapping("/location-info")

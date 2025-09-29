@@ -86,7 +86,7 @@ public class ShroomService {
 
     public void addShroom(ShroomProfile shroomProfile) {
         Shroom shroom = shroomMapper.shroomProfileToShroom(shroomProfile);
-        User user = (User) userRepository.getUsers(shroomProfile.getUserId());
+        User user = userRepository.findUserById(shroomProfile.getUserId());
         shroom.setUser(user);
         shroom.setStatus(Status.PENDING.getCode());
         shroomRepository.save(shroom);
