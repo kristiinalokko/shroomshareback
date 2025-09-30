@@ -1,10 +1,13 @@
 package ee.valiit.shroomshareback.service;
 
-import ee.valiit.shroomshareback.controller.location.dto.LocationShortInfo;
+import ee.valiit.shroomshareback.controller.location.dto.LocationMapInfo;
 import ee.valiit.shroomshareback.controller.maplocation.dto.MapLocationsRequest;
 import ee.valiit.shroomshareback.persistence.location.Location;
 import ee.valiit.shroomshareback.persistence.location.LocationMapper;
-import ee.valiit.shroomshareback.persistence.shroomLocation.ShroomlocationRepository;
+import ee.valiit.shroomshareback.persistence.location.LocationRepository;
+import ee.valiit.shroomshareback.persistence.shroomLocation.ShroomLocation;
+import ee.valiit.shroomshareback.persistence.shroomLocation.ShroomLocationMapper;
+import ee.valiit.shroomshareback.persistence.shroomLocation.ShroomLocationRepository;
 import ee.valiit.shroomshareback.util.DistanceCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,10 +19,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MapLocationService {
 
-    private final ShroomlocationRepository shroomlocationRepository;
-    private final LocationMapper LocationMapper;
+    private final ShroomLocationRepository shroomlocationRepository;
+    private final LocationMapper locationMapper;
+    private final LocationRepository locationRepository;
+    private final ShroomLocationRepository shroomLocationRepository;
+    private final ShroomLocationMapper shroomLocationMapper;
 
-    public List<LocationShortInfo> findFilteredShroomLocations(MapLocationsRequest request) {
+    public List<LocationMapInfo> findAllLocations() {
+        List<Location> locations = locationRepository.findAll();
+        return locationMapper.toLocationMapInfos(locations);
+    }
+
+    public List<LocationMapInfo> findFilteredShroomLocations(MapLocationsRequest request) {
         List<Location> locations = shroomlocationRepository.findFilteredShroomLocationsBy(request.getShroomId(), request.getMinRating(), request.getLastActive());
 
 
@@ -31,7 +42,7 @@ public class MapLocationService {
         }
 
 
-        return LocationMapper.toLocationShortInfos(locationsGeoFiltered);
+        return locationMapper.toLocationMapInfos(locationsGeoFiltered);
 
     }
 
@@ -53,4 +64,8 @@ public class MapLocationService {
     }
 
 
+    public List<LocationMapInfo> findShroomLocations(Integer shroomId) {
+        List<ShroomLocation> shroomLocations = shroomLocationRepository.findShroomLocations(shroomId);
+        return shroomLocationMapper.toLocationMapInfos(shroomLocations);
+    }
 }

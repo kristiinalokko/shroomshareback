@@ -1,6 +1,6 @@
-package ee.valiit.shroomshareback.controller.shroomlocation;
+package ee.valiit.shroomshareback.controller.shroomlocation.dto;
 
-import ee.valiit.shroomshareback.controller.shroom.dto.ShroomBasicInfo;
+import ee.valiit.shroomshareback.controller.shroom.dto.ShroomInfo;
 import ee.valiit.shroomshareback.service.ShroomLocationService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,8 @@ public class ShroomLocationController {
 
     @GetMapping("/location/shrooms")
     @Operation(summary = "Get all location shrooms")
-    public List<ShroomBasicInfo> getLocationShrooms(@RequestParam Integer locationId) {
+    public List<ShroomInfo> getLocationShrooms(@RequestParam Integer locationId) {
         return shroomLocationService.getLocationShrooms(locationId);
     }
+
 }

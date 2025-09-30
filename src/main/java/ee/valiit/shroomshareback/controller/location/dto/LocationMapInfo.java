@@ -1,8 +1,6 @@
 package ee.valiit.shroomshareback.controller.location.dto;
 
 import ee.valiit.shroomshareback.persistence.location.Location;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +15,7 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LocationShortInfo implements Serializable {
+public class LocationMapInfo implements Serializable {
 
     private Integer locationId;
     private String locationName;

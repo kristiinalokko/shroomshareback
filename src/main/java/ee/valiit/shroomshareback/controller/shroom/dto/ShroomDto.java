@@ -8,24 +8,19 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-/**
- * DTO for {@link ee.valiit.shroomshareback.persistence.shroom.Shroom}
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShroomDto implements Serializable {
-    @NotNull
-    private Integer shroomId;
-    @NotNull
-    private Integer userId;
-//    @NotNull
-//    private String username;
+
     @NotNull
     @Size(max = 255)
     private String name;
+
     @Size(max = 255)
     private String description;
+
     @NotNull
-    private String status;
+    private String shroomImage;
+
 }

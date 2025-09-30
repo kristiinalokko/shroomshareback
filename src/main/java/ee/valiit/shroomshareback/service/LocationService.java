@@ -4,7 +4,7 @@ import ee.valiit.shroomshareback.Error;
 import ee.valiit.shroomshareback.Status;
 import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
 import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
-import ee.valiit.shroomshareback.controller.location.dto.LocationShortInfo;
+import ee.valiit.shroomshareback.controller.location.dto.LocationMapInfo;
 import ee.valiit.shroomshareback.controller.location.dto.LocationTableInfo;
 import ee.valiit.shroomshareback.infrastructure.exception.DataNotFoundException;
 import ee.valiit.shroomshareback.persistence.location.Location;
@@ -42,16 +42,12 @@ public class LocationService {
     public void editLocation(LocationDto locationDto, Integer locationId) {
         Location location = locationRepository.findById(locationId).
                 orElseThrow();
-        locationMapper.updateLocationFromDto(location, locationDto);
+        locationMapper.updateLocation(location, locationDto);
         location.setStatus(Status.PENDING.getCode());
         locationRepository.save(location);
         saveLocationImageIfPresent(locationDto, location);
     }
 
-    public List<LocationShortInfo> findAllLocations() {
-        List<Location> locations = locationRepository.findAll();
-        return locationMapper.toLocationShortInfos(locations);
-    }
 
     public LocationInfo getLocationInfo(Integer locationId) {
         Optional<Location> optionalLocation = locationRepository.findById(locationId);
@@ -70,7 +66,7 @@ public class LocationService {
     }
 
     private Location setLocationData(LocationDto locationDto) {
-        Location location = locationMapper.dtoToLocation(locationDto);
+        Location location = locationMapper.toLocation(locationDto);
         User user = findUser(locationDto);
         location.setUser(user);
         setLocationDefaultValues(location);

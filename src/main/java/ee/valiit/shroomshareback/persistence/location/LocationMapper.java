@@ -3,9 +3,9 @@ package ee.valiit.shroomshareback.persistence.location;
 import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
 import ee.valiit.shroomshareback.Status;
 import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
+import ee.valiit.shroomshareback.controller.location.dto.LocationMapInfo;
 import ee.valiit.shroomshareback.controller.location.dto.LocationTableInfo;
 import org.mapstruct.*;
-import ee.valiit.shroomshareback.controller.location.dto.LocationShortInfo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -33,14 +33,14 @@ public interface LocationMapper {
     @Mapping(source = "longitude", target = "longitude")
     @Mapping(source = "description", target = "description")
     @Mapping(expression = "java(java.time.LocalDate.now())", target = "lastActive")
-    Location dtoToLocation(LocationDto locationDto);
+    Location toLocation(LocationDto locationDto);
 
     @Mapping(source = "locationName", target = "name")
     @Mapping(source = "latitude", target = "latitude")
     @Mapping(source = "longitude", target = "longitude")
     @Mapping(source = "description", target = "description")
     @Mapping(expression = "java(java.time.LocalDate.now())", target = "lastActive")
-    void updateLocationFromDto(@MappingTarget Location location, LocationDto locationDto);
+    void updateLocation(@MappingTarget Location location, LocationDto locationDto);
 
 
     @Mapping(source = "id", target = "locationId")
@@ -50,9 +50,9 @@ public interface LocationMapper {
     @Mapping(source = "user.username", target = "username")
     @Mapping(source = "created", target = "createdAt")
     @Mapping(source = "avgRating", target = "avgRating")
-    LocationShortInfo toLocationShortInfo(Location location);
+    LocationMapInfo toLocationMapInfo(Location location);
 
-    List<LocationShortInfo> toLocationShortInfos(List<Location> locations);
+    List<LocationMapInfo> toLocationMapInfos(List<Location> locations);
 
     @Mapping(source = "id", target = "locationId")
     @Mapping(source = "name", target = "locationName")

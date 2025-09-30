@@ -2,7 +2,7 @@ package ee.valiit.shroomshareback.controller.location;
 
 import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
 import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
-import ee.valiit.shroomshareback.controller.location.dto.LocationShortInfo;
+import ee.valiit.shroomshareback.controller.location.dto.LocationMapInfo;
 import ee.valiit.shroomshareback.controller.location.dto.LocationTableInfo;
 import ee.valiit.shroomshareback.service.LocationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,10 +42,7 @@ public class LocationController {
         locationService.deactivateLocation(locationId);
     }
 
-    @GetMapping("/map-locations/all")
-    public List<LocationShortInfo> findAllLocations() {
-        return locationService.findAllLocations();
-    }
+
 
     @GetMapping("/locationsTable")
     public List<LocationTableInfo> getAllLocationTableInfos() {

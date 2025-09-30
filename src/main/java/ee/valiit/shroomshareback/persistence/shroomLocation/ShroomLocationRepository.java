@@ -11,9 +11,13 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface ShroomlocationRepository extends JpaRepository<ShroomLocation, Integer> {
+public interface ShroomLocationRepository extends JpaRepository<ShroomLocation, Integer> {
     @Query("select s from ShroomLocation s where s.shroom.id = :shroomId")
     List<ShroomLocation> findShroomLocations(Integer shroomId);
+
+    @Query("select s from ShroomLocation s where s.location.id = :locationId order by s.id")
+    List<ShroomLocation> findShroomLocationsBy(Integer locationId);
+
 
     @Transactional
     @Modifying

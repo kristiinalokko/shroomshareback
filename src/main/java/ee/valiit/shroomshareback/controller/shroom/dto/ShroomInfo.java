@@ -1,25 +1,21 @@
 package ee.valiit.shroomshareback.controller.shroom.dto;
 
-import ee.valiit.shroomshareback.controller.location.dto.SimplifiedLocation;
-import ee.valiit.shroomshareback.persistence.shroom.Shroom;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
 
-/**
- * DTO for {@link Shroom}
- */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShroomInfo extends ShroomProfile implements Serializable {
+public class ShroomInfo implements Serializable {
 
-    private List<SimplifiedLocation> locations;
+    @NotNull
+    private Integer shroomId;
+    @NotNull
+    @Size(max = 255)
+    private String shroomName;
 }

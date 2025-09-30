@@ -1,9 +1,7 @@
 package ee.valiit.shroomshareback.controller.shroom;
 
-import ee.valiit.shroomshareback.controller.shroom.dto.ShroomBasicInfo;
+import ee.valiit.shroomshareback.controller.shroom.dto.*;
 import ee.valiit.shroomshareback.controller.shroom.dto.ShroomInfo;
-import ee.valiit.shroomshareback.controller.shroom.dto.ShroomProfile;
-import ee.valiit.shroomshareback.controller.shroom.dto.ShroomWithUsername;
 import ee.valiit.shroomshareback.service.ShroomService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -19,32 +17,38 @@ public class ShroomController {
 
     @PostMapping("/shroom")
     @Operation(summary = "Add shroom")
-    public void addShroom(@RequestParam Integer userId, @RequestBody ShroomProfile shroomProfile) {
-        shroomService.addShroom(userId,shroomProfile);
+    public void addShroom(@RequestParam Integer userId, @RequestBody ShroomDto shroomDto) {
+        shroomService.addShroom(userId, shroomDto);
     }
 
-    @GetMapping("/shroom")
-    @Operation(summary = "Get shroom info")
-    public ShroomInfo getShroom(@RequestParam Integer shroomId) {
-        return shroomService.getShroom(shroomId);
+    @PutMapping("/shroom")
+    @Operation(summary = "Update shroom")
+    public void updateShroom(@RequestParam Integer shroomId, @RequestBody ShroomDto shroomDto) {
+        shroomService.updateShroom(shroomId, shroomDto);
     }
 
     @GetMapping("/shrooms")
     @Operation(summary = "Get all shrooms")
-    public List<ShroomBasicInfo> getShrooms() {
+    public List<ShroomInfo> getShrooms() {
         return shroomService.getShrooms();
     }
 
-    @GetMapping("allShrooms")
-    @Operation(summary = "Gets information for the shroom table, returns a list")
-    public List<ShroomWithUsername> getAllShrooms() {
-        return shroomService.getAllShrooms();
+    @GetMapping("/shroom/detailed")
+    @Operation(summary = "Get shroom detailed info")
+    public ShroomDetailedInfo getShroomDetailedInfo(@RequestParam Integer shroomId) {
+        return shroomService.getShroomDetailedInfo(shroomId);
     }
 
-    @PutMapping("/shroom")
-    @Operation(summary = "Edit shroom")
-    public void editShroom(@RequestParam Integer shroomId, @RequestBody ShroomProfile shroomProfile) {
-        shroomService.editShroom(shroomId, shroomProfile);
+
+
+    @GetMapping("/shrooms/detailed/all")
+    @Operation(summary = "Gets information for the shroom table, returns a list")
+    public List<ShroomDetailedInfo> getAllShroomsDetailedInfo() {
+        return shroomService.getAllShroomsDetailedInfo();
     }
+
+
+
+
 
 }

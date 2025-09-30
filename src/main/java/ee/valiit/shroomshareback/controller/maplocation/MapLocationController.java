@@ -1,7 +1,8 @@
 package ee.valiit.shroomshareback.controller.maplocation;
 
-import ee.valiit.shroomshareback.controller.location.dto.LocationShortInfo;
+import ee.valiit.shroomshareback.controller.location.dto.LocationMapInfo;
 import ee.valiit.shroomshareback.controller.maplocation.dto.MapLocationsRequest;
+import ee.valiit.shroomshareback.controller.shroom.dto.ShroomInfo;
 import ee.valiit.shroomshareback.service.MapLocationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -21,6 +22,18 @@ public class MapLocationController {
 
     private final MapLocationService mapLocationService;
 
+    @GetMapping("/map-locations/all")
+    public List<LocationMapInfo> findAllLocations() {
+        return mapLocationService.findAllLocations();
+
+    }
+
+
+    @GetMapping("/map-locations/shroom")
+    public List<LocationMapInfo> findShroomLocations(Integer shroomId) {
+        return mapLocationService.findShroomLocations(shroomId);
+    }
+
 
     @GetMapping("/map-locations/filtered")
     @Operation(
@@ -34,7 +47,7 @@ public class MapLocationController {
                     description = "Ei leitud ühtegi seene asukohta"
             )
     })
-    public List<LocationShortInfo> findFilteredShroomLocations(
+    public List<LocationMapInfo> findFilteredShroomLocations(
             @RequestParam(required = false) Integer shroomId,
             @RequestParam(required = false, defaultValue = "0.0") BigDecimal minRating,
             @RequestParam(required = false, defaultValue = "") String lastActive,
@@ -49,8 +62,6 @@ public class MapLocationController {
         } else {
             localDate = LocalDate.parse(lastActive);
         }
-
-
 
 
         MapLocationsRequest mapLocationsRequest = MapLocationsRequest.builder()
