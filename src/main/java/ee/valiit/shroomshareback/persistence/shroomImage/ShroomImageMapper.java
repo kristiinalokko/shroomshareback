@@ -1,5 +1,6 @@
 package ee.valiit.shroomshareback.persistence.shroomImage;
 
+import ee.valiit.shroomshareback.controller.shroomimage.dto.ShroomImageDto;
 import ee.valiit.shroomshareback.util.BytesConverter;
 import org.mapstruct.*;
 

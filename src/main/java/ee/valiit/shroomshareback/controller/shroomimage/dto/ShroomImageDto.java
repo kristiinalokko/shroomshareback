@@ -1,4 +1,4 @@
-package ee.valiit.shroomshareback.persistence.shroomImage;
+package ee.valiit.shroomshareback.controller.shroomimage.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

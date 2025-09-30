@@ -2,7 +2,7 @@ package ee.valiit.shroomshareback.service;
 
 import ee.valiit.shroomshareback.infrastructure.exception.PrimaryKeyNotFoundException;
 import ee.valiit.shroomshareback.persistence.shroomImage.ShroomImage;
-import ee.valiit.shroomshareback.persistence.shroomImage.ShroomImageDto;
+import ee.valiit.shroomshareback.controller.shroomimage.dto.ShroomImageDto;
 import ee.valiit.shroomshareback.persistence.shroomImage.ShroomImageMapper;
 import ee.valiit.shroomshareback.persistence.shroomImage.ShroomImageRepository;
 import lombok.RequiredArgsConstructor;
