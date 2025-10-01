@@ -26,7 +26,7 @@ public class FavoriteService {
     }
 
 
-    public void addFavorite(Integer locationId, Integer userId) {
+    public void addFavorite(Integer userId, Integer locationId) {
         Optional<User> optionalUser = userRepository.findById(userId);
         Optional<Location> optionalLocation = locationRepository.findById(locationId);
 
