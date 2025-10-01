@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 public interface LocationRepository extends JpaRepository<Location, Integer> {
@@ -25,6 +24,6 @@ public interface LocationRepository extends JpaRepository<Location, Integer> {
     @Transactional
     @Modifying
     @Query("update Location l set l.status=:code where l.id = :locationId")
-    void deactivateLocation(String code, Integer locationId);
+    void updateStatusBy(String code, Integer locationId);
 
 }

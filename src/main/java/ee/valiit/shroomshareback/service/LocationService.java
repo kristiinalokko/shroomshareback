@@ -116,12 +116,15 @@ public class LocationService {
     }
 
     public void deactivateLocation(Integer locationId) {
-        locationRepository.deactivateLocation("D", locationId);
+        locationRepository.updateStatusBy(Status.DEACTIVATED.getCode(), locationId);
     }
 
     public List<LocationExtendedInfo> getAllLocationTableInfos() {
         List<Location> locations = locationRepository.findAll();
-        List<LocationExtendedInfo> locationExtendedInfos = locationMapper.toLocationExtendedInfos(locations);
-        return locationExtendedInfos;
+        return locationMapper.toLocationExtendedInfos(locations);
+    }
+
+    public void activateLocation(Integer locationId) {
+        locationRepository.updateStatusBy(Status.ACTIVE.getCode(), locationId);
     }
 }

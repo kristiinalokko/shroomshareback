@@ -35,13 +35,17 @@ public class LocationController {
         locationService.editLocation(locationDto, locationId);
     }
 
-    @DeleteMapping("/location-info")
+    @DeleteMapping("/location/deactive")
     @Operation(summary = "Kustutab/deaktiveerib asukoha databaasis")
     public void deactivateLocation(@RequestParam Integer locationId) {
         locationService.deactivateLocation(locationId);
     }
 
-
+    @PutMapping("/location/active")
+    @Operation(summary = "Set location status active")
+    public void activateLocation(@RequestParam Integer locationId){
+        locationService.activateLocation(locationId);
+    }
 
     @GetMapping("/locationsTable")
     public List<LocationExtendedInfo> getAllLocationTableInfos() {
