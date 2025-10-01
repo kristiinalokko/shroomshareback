@@ -1,5 +1,6 @@
 package ee.valiit.shroomshareback.controller.favorite;
 
+import ee.valiit.shroomshareback.controller.favorite.dto.FavoriteDto;
 import ee.valiit.shroomshareback.service.FavoriteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package ee.valiit.shroomshareback.controller.favorite;
+package ee.valiit.shroomshareback.controller.favorite.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

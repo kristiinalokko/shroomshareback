@@ -1,6 +1,6 @@
 package ee.valiit.shroomshareback.service;
 
-import ee.valiit.shroomshareback.controller.favorite.FavoriteDto;
+import ee.valiit.shroomshareback.controller.favorite.dto.FavoriteDto;
 import ee.valiit.shroomshareback.persistence.favorite.Favorite;
 import ee.valiit.shroomshareback.persistence.favorite.FavoriteRepository;
 import ee.valiit.shroomshareback.persistence.location.Location;
