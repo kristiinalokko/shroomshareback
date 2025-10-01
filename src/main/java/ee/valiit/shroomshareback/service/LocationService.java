@@ -120,7 +120,7 @@ public class LocationService {
     }
 
     public List<LocationExtendedInfo> getAllLocationTableInfos() {
-        List<Location> locations = locationRepository.findAll();
+        List<Location> locations = locationRepository.findAllSorted();
         return locationMapper.toLocationExtendedInfos(locations);
     }
 
