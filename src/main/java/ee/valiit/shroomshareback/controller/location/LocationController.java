@@ -36,7 +36,7 @@ public class LocationController {
         locationService.editLocation(locationDto, locationId);
     }
 
-    @PutMapping("/location-info")
+    @DeleteMapping("/location-info")
     @Operation(summary = "Kustutab/deaktiveerib asukoha databaasis")
     public void deactivateLocation(@RequestParam Integer locationId) {
         locationService.deactivateLocation(locationId);
