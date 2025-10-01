@@ -27,6 +27,12 @@ public class ShroomController {
         shroomService.updateShroom(shroomId, shroomDto);
     }
 
+    @PutMapping("/shroom/active")
+    @Operation(summary = "Set shroom status to active.")
+    public void setShroomStatusActive(@RequestParam Integer shroomId){
+        shroomService.setShroomStatusActive(shroomId);
+    }
+
     @DeleteMapping("/shroom")
     @Operation(summary = "Delete shroom")
     public void deleteShroom(@RequestParam Integer shroomId){

@@ -15,6 +15,7 @@ import ee.valiit.shroomshareback.persistence.user.User;
 import ee.valiit.shroomshareback.persistence.user.UserRepository;
 import ee.valiit.shroomshareback.util.BytesConverter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -118,5 +119,9 @@ public class ShroomService {
 
     public void deleteShroom(Integer shroomId) {
         shroomRepository.updateStatusBy(Status.DEACTIVATED.getCode(), shroomId);
+    }
+
+    public void setShroomStatusActive(Integer shroomId) {
+        shroomRepository.updateStatusBy(Status.ACTIVE.getCode(), shroomId);
     }
 }
