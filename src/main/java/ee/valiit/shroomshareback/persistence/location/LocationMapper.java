@@ -4,7 +4,7 @@ import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
 import ee.valiit.shroomshareback.Status;
 import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
 import ee.valiit.shroomshareback.controller.location.dto.LocationMapInfo;
-import ee.valiit.shroomshareback.controller.location.dto.LocationTableInfo;
+import ee.valiit.shroomshareback.controller.location.dto.LocationExtendedInfo;
 import org.mapstruct.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -60,7 +60,7 @@ public interface LocationMapper {
     @Mapping(source = "user.username", target = "username")
     @Mapping(source = "description", target = "description")
     @Mapping(source = "status", target = "status")
-    LocationTableInfo toLocationTableInfo(Location location);
+    LocationExtendedInfo toLocationExtendedInfo(Location location);
 
-    List<LocationTableInfo> toLocationTableInfos(List<Location> locations);
+    List<LocationExtendedInfo> toLocationExtendedInfos(List<Location> locations);
 }

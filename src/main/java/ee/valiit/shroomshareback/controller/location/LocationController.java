@@ -2,8 +2,7 @@ package ee.valiit.shroomshareback.controller.location;
 
 import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
 import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
-import ee.valiit.shroomshareback.controller.location.dto.LocationMapInfo;
-import ee.valiit.shroomshareback.controller.location.dto.LocationTableInfo;
+import ee.valiit.shroomshareback.controller.location.dto.LocationExtendedInfo;
 import ee.valiit.shroomshareback.service.LocationService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +44,7 @@ public class LocationController {
 
 
     @GetMapping("/locationsTable")
-    public List<LocationTableInfo> getAllLocationTableInfos() {
+    public List<LocationExtendedInfo> getAllLocationTableInfos() {
         return locationService.getAllLocationTableInfos();
     }
 }

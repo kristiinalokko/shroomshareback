@@ -3,9 +3,8 @@ package ee.valiit.shroomshareback.service;
 import ee.valiit.shroomshareback.Error;
 import ee.valiit.shroomshareback.Status;
 import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
+import ee.valiit.shroomshareback.controller.location.dto.LocationExtendedInfo;
 import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
-import ee.valiit.shroomshareback.controller.location.dto.LocationMapInfo;
-import ee.valiit.shroomshareback.controller.location.dto.LocationTableInfo;
 import ee.valiit.shroomshareback.infrastructure.exception.DataNotFoundException;
 import ee.valiit.shroomshareback.persistence.location.Location;
 import ee.valiit.shroomshareback.persistence.location.LocationMapper;
@@ -16,7 +15,6 @@ import ee.valiit.shroomshareback.persistence.user.User;
 import ee.valiit.shroomshareback.persistence.user.UserRepository;
 import ee.valiit.shroomshareback.util.BytesConverter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -121,9 +119,9 @@ public class LocationService {
         locationRepository.deactivateLocation("D", locationId);
     }
 
-    public List<LocationTableInfo> getAllLocationTableInfos() {
+    public List<LocationExtendedInfo> getAllLocationTableInfos() {
         List<Location> locations = locationRepository.findAll();
-        List<LocationTableInfo> locationTableInfos = locationMapper.toLocationTableInfos(locations);
-        return locationTableInfos;
+        List<LocationExtendedInfo> locationExtendedInfos = locationMapper.toLocationExtendedInfos(locations);
+        return locationExtendedInfos;
     }
 }
