@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public interface LocationRepository extends JpaRepository<Location, Integer> {
@@ -26,4 +27,12 @@ public interface LocationRepository extends JpaRepository<Location, Integer> {
     @Query("update Location l set l.status=:code where l.id = :locationId")
     void updateStatusBy(String code, Integer locationId);
 
+    @Query("SELECT l FROM Location l ORDER BY " +
+            "CASE l.status " +
+            "  WHEN 'P' THEN 1 " +
+            "  WHEN 'A' THEN 2 " +
+            "  WHEN 'D' THEN 3 " +
+            "  ELSE 4 END, " +
+            "l.id DESC")
+    List<Location> findAllSorted();
 }

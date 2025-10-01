@@ -113,7 +113,7 @@ public class ShroomService {
     }
 
     public List<ShroomDetailedInfo> getAllShroomsDetailedInfo() {
-        List<Shroom> shrooms = shroomRepository.findAll();
+        List<Shroom> shrooms = shroomRepository.findAllSorted();
         return shroomMapper.toShroomDetailedInfos(shrooms);
     }
 
