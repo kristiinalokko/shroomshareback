@@ -23,4 +23,12 @@ public interface ShroomRepository extends JpaRepository<Shroom, Integer> {
     @Query("update Shroom s set s.status = :status where s.id = :shroomId")
     void updateStatusBy(String status, Integer shroomId);
 
+    @Query("SELECT s FROM Shroom s ORDER BY " +
+            "CASE s.status " +
+            "  WHEN 'P' THEN 1 " +
+            "  WHEN 'A' THEN 2 " +
+            "  WHEN 'D' THEN 3 " +
+            "  ELSE 4 END, " +
+            "s.id DESC")
+    List<Shroom> findAllSorted();
 }
