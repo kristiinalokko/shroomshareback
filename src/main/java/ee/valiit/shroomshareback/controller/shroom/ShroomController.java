@@ -27,6 +27,12 @@ public class ShroomController {
         shroomService.updateShroom(shroomId, shroomDto);
     }
 
+    @DeleteMapping("/shroom")
+    @Operation(summary = "Delete shroom")
+    public void deleteShroom(@RequestParam Integer shroomId){
+        shroomService.deleteShroom(shroomId);
+    }
+
     @GetMapping("/shrooms")
     @Operation(summary = "Get all shrooms")
     public List<ShroomInfo> getShrooms() {

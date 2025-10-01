@@ -1,5 +1,6 @@
 package ee.valiit.shroomshareback.service;
 
+import ee.valiit.shroomshareback.Status;
 import ee.valiit.shroomshareback.controller.shroom.dto.ShroomDetailedInfo;
 import ee.valiit.shroomshareback.controller.shroom.dto.ShroomDto;
 import ee.valiit.shroomshareback.controller.shroom.dto.ShroomInfo;
@@ -113,5 +114,9 @@ public class ShroomService {
     public List<ShroomDetailedInfo> getAllShroomsDetailedInfo() {
         List<Shroom> shrooms = shroomRepository.findAll();
         return shroomMapper.toShroomDetailedInfos(shrooms);
+    }
+
+    public void deleteShroom(Integer shroomId) {
+        shroomRepository.updateStatusBy(Status.DEACTIVATED.getCode(), shroomId);
     }
 }
