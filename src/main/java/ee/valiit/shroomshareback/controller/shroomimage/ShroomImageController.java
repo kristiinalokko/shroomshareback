@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ShroomImageController {
 
-    private ShroomImageService shroomImageService;
+    private final ShroomImageService shroomImageService;
 
     @GetMapping("/shroom-image")
     public ShroomImageDto getShroomImage(@RequestParam Integer shroomId) {
