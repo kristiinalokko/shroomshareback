@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
 
-  @Query("select f from Favorite f where f.user.id = :userId and f.location.id = :locationId")
+  @Query("select f from Favorite f where f.location.id = :locationId and f.user.id = :userId")
   Optional<Favorite> findByLocationIdAndUserId(Integer locationId, Integer userId);
 
   @Transactional

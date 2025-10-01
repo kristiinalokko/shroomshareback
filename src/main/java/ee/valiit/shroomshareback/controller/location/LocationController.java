@@ -47,8 +47,9 @@ public class LocationController {
         locationService.activateLocation(locationId);
     }
 
-    @GetMapping("/locationsTable")
-    public List<LocationExtendedInfo> getAllLocationTableInfos() {
-        return locationService.getAllLocationTableInfos();
+    @GetMapping("/locationsExtendedInfos")
+    public List<LocationExtendedInfo> getAllLocationExtendedInfos(@RequestParam Integer userId) {
+        return locationService.getAllLocationExtendedInfos(userId);
+
     }
 }

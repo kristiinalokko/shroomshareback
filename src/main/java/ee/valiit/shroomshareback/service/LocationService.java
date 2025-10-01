@@ -6,6 +6,8 @@ import ee.valiit.shroomshareback.controller.location.dto.LocationDto;
 import ee.valiit.shroomshareback.controller.location.dto.LocationExtendedInfo;
 import ee.valiit.shroomshareback.controller.location.dto.LocationInfo;
 import ee.valiit.shroomshareback.infrastructure.exception.DataNotFoundException;
+import ee.valiit.shroomshareback.persistence.favorite.Favorite;
+import ee.valiit.shroomshareback.persistence.favorite.FavoriteRepository;
 import ee.valiit.shroomshareback.persistence.location.Location;
 import ee.valiit.shroomshareback.persistence.location.LocationMapper;
 import ee.valiit.shroomshareback.persistence.location.LocationRepository;
@@ -30,6 +32,7 @@ public class LocationService {
     private final LocationMapper locationMapper;
     private final LocationImageRepository locationImageRepository;
     private final UserRepository userRepository;
+    private final FavoriteRepository favoriteRepository;
 
     public Integer addLocation(LocationDto locationDto) {
         Location location = setLocationData(locationDto);
@@ -119,9 +122,14 @@ public class LocationService {
         locationRepository.updateStatusBy(Status.DEACTIVATED.getCode(), locationId);
     }
 
-    public List<LocationExtendedInfo> getAllLocationTableInfos() {
+    public List<LocationExtendedInfo> getAllLocationExtendedInfos(Integer userId) {
         List<Location> locations = locationRepository.findAll();
-        return locationMapper.toLocationExtendedInfos(locations);
+        List<LocationExtendedInfo> locationExtendedInfos = locationMapper.toLocationExtendedInfos(locations);
+        for (LocationExtendedInfo locationExtendedInfo : locationExtendedInfos) {
+            Optional<Favorite> optionalFavorite = favoriteRepository.findByLocationIdAndUserId(locationExtendedInfo.getLocationId(), userId);
+            locationExtendedInfo.setIsFavorite(optionalFavorite.isPresent());
+        }
+        return locationExtendedInfos;
     }
 
     public void activateLocation(Integer locationId) {

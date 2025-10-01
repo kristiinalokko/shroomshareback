@@ -19,4 +19,5 @@ public class LocationExtendedInfo implements Serializable {
     private String username;
     private String description;
     private String status;
+    private Boolean isFavorite;
 }
