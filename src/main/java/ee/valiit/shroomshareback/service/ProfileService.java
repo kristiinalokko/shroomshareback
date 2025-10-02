@@ -29,8 +29,7 @@ public class ProfileService {
     public ProfileData getProfile(Integer userId) {
         Optional<Profile> optionalProfile = profileRepository.findByUserId(userId);
         if (optionalProfile.isPresent()) {
-            ProfileData profileData = createAndSetProfileData(userId, optionalProfile);
-            return profileData;
+            return createAndSetProfileData(userId, optionalProfile);
         } else {
             throw new DataNotFoundException(Error.PROFILE_NOT_FOUND.getMessage(), Error.PROFILE_NOT_FOUND.getErrorCode());
         }
