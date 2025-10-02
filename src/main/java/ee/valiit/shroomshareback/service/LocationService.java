@@ -128,7 +128,7 @@ public class LocationService {
     }
 
     public List<LocationExtendedInfo> getAllLocationExtendedInfos(Integer userId) {
-        List<Location> locations = locationRepository.findAll();
+        List<Location> locations = locationRepository.findAllSorted();
         List<LocationExtendedInfo> locationExtendedInfos = locationMapper.toLocationExtendedInfos(locations);
         for (LocationExtendedInfo locationExtendedInfo : locationExtendedInfos) {
             Optional<Favorite> optionalFavorite = favoriteRepository.findByLocationIdAndUserId(locationExtendedInfo.getLocationId(), userId);
