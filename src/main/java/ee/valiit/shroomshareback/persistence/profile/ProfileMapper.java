@@ -16,4 +16,10 @@ public interface ProfileMapper {
     @Mapping(source = "email", target = "email")
     @Mapping(source = "description", target = "description")
     ProfileData toProfileData(Profile profile);
+
+    @Mapping(source = "description",target = "description")
+    @Mapping(source = "email",target = "email")
+    @Mapping(source = "firstName",target = "firstName")
+    @Mapping(source = "lastName",target = "lastName")
+    Profile profileDatatoProfile(ProfileData profileData);
 }

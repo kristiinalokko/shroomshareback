@@ -6,12 +6,15 @@ import ee.valiit.shroomshareback.infrastructure.exception.DataNotFoundException;
 import ee.valiit.shroomshareback.persistence.profile.Profile;
 import ee.valiit.shroomshareback.persistence.profile.ProfileMapper;
 import ee.valiit.shroomshareback.persistence.profile.ProfileRepository;
+import ee.valiit.shroomshareback.persistence.user.User;
+import ee.valiit.shroomshareback.persistence.user.UserRepository;
 import ee.valiit.shroomshareback.persistence.userImage.UserImage;
 import ee.valiit.shroomshareback.persistence.userImage.UserImageRepository;
 import ee.valiit.shroomshareback.util.BytesConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,6 +24,7 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
     private final ProfileMapper profileMapper;
     private final UserImageRepository userImageRepository;
+    private final UserRepository userRepository;
 
     public ProfileData getProfile(Integer userId) {
         Optional<Profile> optionalProfile = profileRepository.findByUserId(userId);
@@ -48,5 +52,17 @@ public class ProfileService {
         } else {
             profileData.setImageData("");
         }
+    }
+
+    public void addProfile(ProfileData profileData) {
+        Profile profile = profileMapper.profileDatatoProfile(profileData);
+        User user = userRepository.getUserById(profileData.getUserId());
+        profile.setUser(user);
+        UserImage userImage = new UserImage();
+        userImage.setUserId(user.getId());
+        userImage.setImageData(BytesConverter.stringToBytes(profileData.getImageData()));
+        profileRepository.save(profile);
+        userImageRepository.save(userImage);
+
     }
 }
