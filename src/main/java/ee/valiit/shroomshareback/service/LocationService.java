@@ -18,10 +18,6 @@ import ee.valiit.shroomshareback.persistence.user.UserRepository;
 import ee.valiit.shroomshareback.util.BytesConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ee.valiit.shroomshareback.persistence.favorite.Favorite;
-import ee.valiit.shroomshareback.persistence.favorite.FavoriteRepository;
-
-
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -93,9 +89,18 @@ public class LocationService {
     }
 
     private void createAndSaveLocationImage(LocationDto locationDto, Location location) {
+        Optional<LocationImage> optionalImage = locationImageRepository.findImageByLocationId(location.getId());
         byte[] imageData = BytesConverter.stringToBytes(locationDto.getLocationImage());
-        LocationImage locationImage = createLocationImage(location, imageData);
-        locationImageRepository.save(locationImage);
+
+        if (optionalImage.isPresent()) {
+            LocationImage locationImage = optionalImage.get();
+            locationImage.setImageData(imageData);
+            locationImageRepository.save(locationImage);
+        } else {
+            LocationImage locationImage = createLocationImage(location, imageData);
+            locationImageRepository.save(locationImage);
+        }
+
     }
 
     private static LocationImage createLocationImage(Location location, byte[] imageData) {
