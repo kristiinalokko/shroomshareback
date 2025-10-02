@@ -3,11 +3,22 @@ INSERT INTO shroomshare.role(id, name) VALUES (default, 'admin');
 INSERT INTO shroomshare.role(id, name) VALUES (default, 'user');
 
 -- Users
-INSERT INTO shroomshare.user(id, role_id, username, password, status) VALUES (default, 1, 'admin', '123', 'A');
-INSERT INTO shroomshare.user(id, role_id, username, password, status) VALUES (default, 2, 'user', '123', 'A');
-INSERT INTO shroomshare.user(id, role_id, username, password, status) VALUES (default, 2, 'testuser', 'password', 'A');
+INSERT INTO shroomshare.user(id, role_id, username, password, status) VALUES
+                                                                          (default, 1, 'admin', '123', 'A'),
+                                                                          (default, 2, 'user', '123', 'A'),
+                                                                          (default, 2, 'testuser', 'password', 'A'),
+                                                                          (default, 2, 'jaan', 'salasona', 'A'),
+                                                                          (default, 2, 'liisa', 'salasona', 'A');
 
--- 20 Locations across Estonia
+-- Profiles
+INSERT INTO shroomshare.profile(id, user_id, first_name, last_name, email, description) VALUES
+                                                                                            (default, 1, 'Admin', 'User', 'admin@example.com', 'Süsteemi administraator'),
+                                                                                            (default, 2, 'Tavakasutaja', 'Näide', 'user@example.com', 'Testkasutaja'),
+                                                                                            (default, 3, 'Test', 'Kasutaja', 'test@example.com', 'Profiili testimine'),
+                                                                                            (default, 4, 'Jaan', 'Tamm', 'jaan.tamm@example.com', 'Looduse ja seente entusiast'),
+                                                                                            (default, 5, 'Liisa', 'Kask', 'liisa.kask@example.com', 'Armastan metsa ja piknikke');
+
+-- Locations
 INSERT INTO shroomshare.location(id, user_id, name, latitude, longitude, description, created, last_active, status, avg_rating) VALUES
                                                                                                                                     (default, 1, 'Tallinna Rocca al Mare mets', 59.4289, 24.6412, 'Linna lähedal asuv mets, palju männiseeni', CURRENT_DATE, CURRENT_DATE, 'A', 4.5),
                                                                                                                                     (default, 1, 'Tartu Raadi mets', 58.3875, 26.7456, 'Ülikooli lähedal, rohkelt puravik', CURRENT_DATE, CURRENT_DATE, 'A', 4.2),
@@ -30,7 +41,7 @@ INSERT INTO shroomshare.location(id, user_id, name, latitude, longitude, descrip
                                                                                                                                     (default, 1, 'Jõgeva Pedja jõe äär', 58.7467, 26.3945, 'Jõeäärne niiskusmets', CURRENT_DATE, CURRENT_DATE, 'A', 4.1),
                                                                                                                                     (default, 2, 'Tapa raudteejaama mets', 59.2612, 25.9589, 'Vaikne mets jaama taga', CURRENT_DATE, CURRENT_DATE, 'A', 3.3);
 
--- 10 Estonian Mushrooms
+-- Mushrooms
 INSERT INTO shroomshare.shroom(id, user_id, name, description, status) VALUES
                                                                            (default, 1, 'Harilik kukeseen', 'Kollase või oranži kübaraga, väga maitsev ja populaarne', 'A'),
                                                                            (default, 1, 'Männiseen', 'Punakaspruuni kübaraga, kasvab männimetsas', 'A'),
@@ -55,7 +66,7 @@ INSERT INTO shroomshare.shroom_location(id, location_id, shroom_id) VALUES
                                                                         (default, 15, 3), (default, 16, 1), (default, 17, 5),
                                                                         (default, 18, 6), (default, 19, 4), (default, 20, 8);
 
--- Location Images (forest images - using placeholder image URLs)
+-- Location Images
 INSERT INTO shroomshare.location_image(id, location_id, image_data) VALUES
                                                                         (default, 1, 'https://images.unsplash.com/photo-1511497584788-876760111969'),
                                                                         (default, 2, 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d'),
@@ -80,13 +91,56 @@ INSERT INTO shroomshare.location_image(id, location_id, image_data) VALUES
 
 -- Mushroom Images
 INSERT INTO shroomshare.shroom_image(id, shroom_id, image_data) VALUES
-                                                                    (default, 1, 'https://images.unsplash.com/photo-1579684453423-f84349ef60b0'),
-                                                                    (default, 2, 'https://images.unsplash.com/photo-1509818756475-cc0e0a0e8653'),
-                                                                    (default, 3, 'https://images.unsplash.com/photo-1599045074449-09c5c6c6e377'),
-                                                                    (default, 4, 'https://images.unsplash.com/photo-1591551121581-4c93b2ae3d40'),
-                                                                    (default, 5, 'https://images.unsplash.com/photo-1584270354949-c26e0d8b4f82'),
-                                                                    (default, 6, 'https://images.unsplash.com/photo-1565856305426-8f9e94dce418'),
-                                                                    (default, 7, 'https://images.unsplash.com/photo-1567728403596-22d6e5c3e0e7'),
-                                                                    (default, 8, 'https://images.unsplash.com/photo-1550831107-1553da8c252d'),
-                                                                    (default, 9, 'https://images.unsplash.com/photo-1563656157432-67560011e209'),
-                                                                    (default, 10, 'https://images.unsplash.com/photo-1601218544381-a1c723b6dfd6');
+                                                                    (default, 1, 'https://www.looduskalender.ee/n/sites/default/files/inline-images/090809aa132_0.jpg'),
+                                                                    (default, 2, 'https://www.naturephoto-cz.com/photos/maly/manniriisikas-xxx721.jpg'),
+                                                                    (default, 3, 'https://rmk.ee/wp-content/uploads/2019/01/1-12_block.jpg'),
+                                                                    (default, 4, 'https://www.looduskalender.ee/n/sites/default/files/inline-images/030831aa020.jpg'),
+                                                                    (default, 5, 'https://svampguiden.com/assets/img/sg_img/sg_artbilder/agaricus_arvensis_01.jpg'),
+                                                                    (default, 6, 'https://s.err.ee/photo/crop/2020/10/06/825157h5e34t24.jpg'),
+                                                                    (default, 7, 'https://s.err.ee/photo/crop/2021/07/17/1076517h095at24.jpg'),
+                                                                    (default, 8, 'https://nami-nami.ee/files//recipes/1001/veisekeel.jpg'),
+                                                                    (default, 9, 'https://www.hansaplant.ee/media/catalog/product/cache/image/1000x1000/e9c3970ab036de70892d86c6d221abfe/1/1/113426.jpg'),
+                                                                    (default, 10, 'https://https://f9.pmo.ee/d0LHFaV2_Kki9BX59H1RFg6rfoU=/685x0/filters:format(webp)/nginx/o/2018/09/07/11396745t1he22b.jpg');
+
+-- Comments (2 per location by Jaan and Liisa)
+INSERT INTO shroomshare.comment(id, location_id, user_id, body, rating, created, status) VALUES
+                                                                                             (default, 1, 4, 'Suurepärane mets, palju kukeseeni!', 5, CURRENT_DATE, 'A'),
+                                                                                             (default, 1, 5, 'Hea jalutuskäigu koht, kuid kitsas parkimisala.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 2, 4, 'Raadi mets on ideaalne puraviku jaoks.', 5, CURRENT_DATE, 'A'),
+                                                                                             (default, 2, 5, 'Kaunis ja rahulik mets Tartu lähedal.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 3, 4, 'Valgeranna rand on tore, kuid mõnikord liiga rahvarohke.', 3, CURRENT_DATE, 'A'),
+                                                                                             (default, 3, 5, 'Kukeseeni saab palju, eriti hommikuti.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 4, 4, 'Narva-Jõesuu männimets on väga puhas ja vaikne.', 5, CURRENT_DATE, 'A'),
+                                                                                             (default, 4, 5, 'Hea jalutuskohaga mets, mõnus lõhn.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 5, 4, 'Uuemõisa park on kaunis ja sobib perega külastamiseks.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 5, 5, 'Mitmekesised seened, kuid mõnikord märg pinnas.', 3, CURRENT_DATE, 'A'),
+                                                                                             (default, 6, 4, 'Paala mets on ideaalne segamets seente jaoks.', 5, CURRENT_DATE, 'A'),
+                                                                                             (default, 6, 5, 'Järve ääres on mõnus istuda ja nautida loodust.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 7, 4, 'Vallimäe ümbrus on huvitav, ajaloohõnguline.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 7, 5, 'Mets on rahulik, sobib seente otsimiseks.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 8, 4, 'Smuuli mets on suurepärane Saaremaal.', 5, CURRENT_DATE, 'A'),
+                                                                                             (default, 8, 5, 'Palju erinevaid seeni, kindlasti tagasi tulen.', 5, CURRENT_DATE, 'A'),
+                                                                                             (default, 9, 4, 'Tamula järve ümbrus on niiske, sobib pilvikute jaoks.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 9, 5, 'Kaunis koht piknikuks ja seente kogumiseks.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 10, 4, 'Karilatsi mets on rahulik ja looduskaunis.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 10, 5, 'Hea paik jalutamiseks, eriti sügisel.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 11, 4, 'Kesklinna park on kena, eriti varahommikul.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 11, 5, 'Sobib hästi väikeste lastega jalutamiseks.', 3, CURRENT_DATE, 'A'),
+                                                                                             (default, 12, 4, 'Kukruse mets on vaikne ja seenerohke.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 12, 5, 'Leidsime palju pilvikuid ja puravikke.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 13, 4, 'Piiriäärne mets on rahulik ja ilus.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 13, 5, 'Metsas jalutamine mõnus ja turvaline.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 14, 4, 'Hiiumaa park on kaunis ja avar.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 14, 5, 'Hea koht piknikuks ja seente otsimiseks.', 3, CURRENT_DATE, 'A'),
+                                                                                             (default, 15, 4, 'Verevi järve mets on niiske ja lopsakas.', 5, CURRENT_DATE, 'A'),
+                                                                                             (default, 15, 5, 'Leidsime palju puravikke, ilus paik.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 16, 4, 'Keila Joa park on vana ja kaunis.', 5, CURRENT_DATE, 'A'),
+                                                                                             (default, 16, 5, 'Väga ilus jalutuskoht, soovitan külastada.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 17, 4, 'Vilsandi lähedal on meremets kaunis ja rahulik.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 17, 5, 'Ideaalne koht loodusesse sukeldumiseks.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 18, 4, 'Mahtra mets on keskmise suurusega, hea segamets.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 18, 5, 'Sobib hästi seenelkäiguks.', 3, CURRENT_DATE, 'A'),
+                                                                                             (default, 19, 4, 'Pedja jõe äär on niiske ja seenerohke.', 5, CURRENT_DATE, 'A'),
+                                                                                             (default, 19, 5, 'Rahulik ja ilus jõeäärne mets.', 4, CURRENT_DATE, 'A'),
+                                                                                             (default, 20, 4, 'Tapa raudteejaama mets on vaikne ja sobib hommikuseks jalutuseks.', 3, CURRENT_DATE, 'A'),
+                                                                                             (default, 20, 5, 'Mets on kena, kuid piiratud parkimisvõimalused.', 3, CURRENT_DATE, 'A');
