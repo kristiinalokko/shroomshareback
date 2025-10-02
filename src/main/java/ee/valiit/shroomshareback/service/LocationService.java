@@ -60,14 +60,14 @@ public class LocationService {
         Optional<Location> optionalLocation = locationRepository.findById(locationId);
 
         if (optionalLocation.isPresent()) {
-            return createAndSetLocationInfo(locationId, optionalLocation);
+            return createAndSetLocationInfo(locationId, optionalLocation.get());
         } else {
             throw new DataNotFoundException(Error.LOCATION_NOT_FOUND.getMessage(), Error.LOCATION_NOT_FOUND.getErrorCode());
         }
     }
 
-    private LocationInfo createAndSetLocationInfo(Integer locationId, Optional<Location> optionalLocation) {
-        LocationInfo locationInfo = locationMapper.toLocationInfo(optionalLocation.get());
+    private LocationInfo createAndSetLocationInfo(Integer locationId, Location location) {
+        LocationInfo locationInfo = locationMapper.toLocationInfo(location);
         addImageIfExists(locationId, locationInfo);
         return locationInfo;
     }
