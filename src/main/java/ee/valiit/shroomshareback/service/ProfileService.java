@@ -79,6 +79,7 @@ public class ProfileService {
                 userImageRepository.save(userImage);
             } else {
                 UserImage userImage = new UserImage();
+                userImage.setUser(userRepository.getUserById(profileData.getUserId()));
                 userImage.setImageData(BytesConverter.stringToBytes(profileData.getImageData()));
                 userImageRepository.save(userImage);
             }
