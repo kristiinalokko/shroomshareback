@@ -32,4 +32,5 @@ public class ProfileData implements Serializable {
     @Size(max = 255)
     private String description;
     private String imageData;
+
 }

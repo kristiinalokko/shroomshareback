@@ -12,9 +12,9 @@ import ee.valiit.shroomshareback.persistence.userImage.UserImage;
 import ee.valiit.shroomshareback.persistence.userImage.UserImageRepository;
 import ee.valiit.shroomshareback.util.BytesConverter;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.BCException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -55,7 +55,7 @@ public class ProfileService {
     }
 
     public void addProfile(ProfileData profileData) {
-        Profile profile = profileMapper.profileDatatoProfile(profileData);
+        Profile profile = profileMapper.toProfile(profileData);
         User user = userRepository.getUserById(profileData.getUserId());
         profile.setUser(user);
         UserImage userImage = new UserImage();
@@ -64,5 +64,24 @@ public class ProfileService {
         profileRepository.save(profile);
         userImageRepository.save(userImage);
 
+    }
+
+    public void updateProfile(ProfileData profileData) {
+        Profile profile = profileMapper.toProfile(profileData);
+        profile.setId(profileData.getProfileId());
+        profile.setUser(userRepository.getUserById(profileData.getUserId()));
+        profileRepository.save(profile);
+        if (!profileData.getImageData().isEmpty()) {
+            Optional<UserImage> optionalImage = userImageRepository.findByUserId(profileData.getUserId());
+            if (optionalImage.isPresent()) {
+                UserImage userImage = optionalImage.get();
+                userImage.setImageData(BytesConverter.stringToBytes(profileData.getImageData()));
+                userImageRepository.save(userImage);
+            } else {
+                UserImage userImage = new UserImage();
+                userImage.setImageData(BytesConverter.stringToBytes(profileData.getImageData()));
+                userImageRepository.save(userImage);
+            }
+        }
     }
 }

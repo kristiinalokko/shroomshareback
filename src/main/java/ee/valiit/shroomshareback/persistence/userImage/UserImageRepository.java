@@ -1,5 +1,7 @@
 package ee.valiit.shroomshareback.persistence.userImage;
 
+import ee.valiit.shroomshareback.persistence.user.User;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,4 +14,5 @@ public interface UserImageRepository extends JpaRepository<UserImage, Integer> {
     Optional<UserImage> findByUserId(Integer userId);
 
 
+    UserImage user(@NotNull User user);
 }

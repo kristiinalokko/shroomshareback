@@ -21,5 +21,5 @@ public interface ProfileMapper {
     @Mapping(source = "email",target = "email")
     @Mapping(source = "firstName",target = "firstName")
     @Mapping(source = "lastName",target = "lastName")
-    Profile profileDatatoProfile(ProfileData profileData);
+    Profile toProfile(ProfileData profileData);
 }

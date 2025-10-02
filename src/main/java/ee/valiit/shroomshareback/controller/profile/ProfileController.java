@@ -19,8 +19,13 @@ public class ProfileController {
 
     @PostMapping("/profile")
     @Operation(summary = "add new profile")
-    public void addProfile(@RequestBody ProfileData profileData){
+    public void addProfile(@RequestBody ProfileData profileData) {
         profileService.addProfile(profileData);
     }
 
+    @PutMapping("/profile")
+    @Operation(summary = "Muuda profilli")
+    public void updateProfile(@RequestBody ProfileData profileData) {
+        profileService.updateProfile(profileData);
+    }
 }
