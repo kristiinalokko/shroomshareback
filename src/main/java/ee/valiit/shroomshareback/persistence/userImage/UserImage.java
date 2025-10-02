@@ -1,5 +1,6 @@
 package ee.valiit.shroomshareback.persistence.userImage;
 
+import ee.valiit.shroomshareback.persistence.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -17,8 +18,9 @@ public class UserImage {
     private Integer id;
 
     @NotNull
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @NotNull
     @Column(name = "image_data", nullable = false)

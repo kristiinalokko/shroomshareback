@@ -79,12 +79,7 @@ CREATE TABLE user_image
     image_data bytea  NOT NULL,
     CONSTRAINT user_image_pk PRIMARY KEY (id)
 );
-ALTER TABLE user_image ADD CONSTRAINT user_image_user
-    FOREIGN KEY (user_id)
-        REFERENCES "user" (id)
-        NOT DEFERRABLE
-            INITIALLY IMMEDIATE
-;
+
 
 -- Table: profile
 CREATE TABLE profile
@@ -291,5 +286,12 @@ ALTER TABLE "user"
                 INITIALLY IMMEDIATE
 ;
 
+ALTER TABLE user_image
+    ADD CONSTRAINT user_image_user
+        FOREIGN KEY (user_id)
+            REFERENCES "user" (id)
+            NOT DEFERRABLE
+                INITIALLY IMMEDIATE
+;
 -- End of file.
 

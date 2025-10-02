@@ -59,7 +59,7 @@ public class ProfileService {
         User user = userRepository.getUserById(profileData.getUserId());
         profile.setUser(user);
         UserImage userImage = new UserImage();
-        userImage.setUserId(user.getId());
+        userImage.setUser(user);
         userImage.setImageData(BytesConverter.stringToBytes(profileData.getImageData()));
         profileRepository.save(profile);
         userImageRepository.save(userImage);
