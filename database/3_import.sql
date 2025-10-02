@@ -100,7 +100,7 @@ INSERT INTO shroomshare.shroom_image(id, shroom_id, image_data) VALUES
                                                                     (default, 7, 'https://s.err.ee/photo/crop/2021/07/17/1076517h095at24.jpg'),
                                                                     (default, 8, 'https://nami-nami.ee/files//recipes/1001/veisekeel.jpg'),
                                                                     (default, 9, 'https://www.hansaplant.ee/media/catalog/product/cache/image/1000x1000/e9c3970ab036de70892d86c6d221abfe/1/1/113426.jpg'),
-                                                                    (default, 10, 'https://https://f9.pmo.ee/d0LHFaV2_Kki9BX59H1RFg6rfoU=/685x0/filters:format(webp)/nginx/o/2018/09/07/11396745t1he22b.jpg');
+                                                                    (default, 10, 'https://www.loodusfoto.eu/storage/cache/images/000/138/seen22,medium.2x.1676395587.jpg');
 
 -- Comments (2 per location by Jaan and Liisa)
 INSERT INTO shroomshare.comment(id, location_id, user_id, body, rating, created, status) VALUES
